@@ -1,0 +1,84 @@
+name: werewolf_client
+description: Game were wolf online with flutter.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Notification
+  flutter_local_notifications: ^5.0.0+1
+  firebase_messaging: ^9.1.1
+
+  #SignIn social
+  crypto: ^3.0.1
+  firebase_core: ^1.0.3
+  firebase_auth: ^1.0.3
+  flutter_facebook_auth: ^3.3.2+2
+  google_sign_in: ^5.0.1
+  sign_in_with_apple: ^3.0.0
+
+  #Network
+  dio: ^4.0.0
+  connectivity: ^3.0.3
+
+  get: ^4.1.4
+  get_storage: ^2.0.2
+  rxdart: ^0.26.0
+  cupertino_icons: ^1.0.2
+  flutter_easyloading: ^3.0.0
+  flutter_dotenv: ^3.1.0
+  socket_io_client: ^0.9.12
+  modal_bottom_sheet: ^2.0.0
+  responsive_builder: ^0.4.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+    - assets/images/
+    - assets/images/icons/
+
+  fonts:
+    - family: Coiny
+      fonts:
+        - asset: assets/fonts/Coiny-Regular.ttf
+    - family: Fira
+      fonts:
+        - asset: assets/fonts/FiraSans-Regular.ttf
+        - asset: assets/fonts/FiraSans-Black.ttf
+          weight: 900
+        - asset: assets/fonts/FiraSans-Medium.ttf
+          weight: 800
+        - asset: assets/fonts/FiraSans-Medium.ttf
+          weight: 700
+        - asset: assets/fonts/FiraSans-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/FiraSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/FiraSans-Light.ttf
+          weight: 200
+        - asset: assets/fonts/FiraSans-Light.ttf
+          weight: 100
+
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Nunito-Light.ttf
+          weight: 200
+        - asset: assets/fonts/Nunito-Light.ttf
+          weight: 100
