@@ -4,6 +4,15 @@ import 'package:get/get.dart';
 class AppValid {
   AppValid._();
 
+  static validatePhone() {
+    return (value) {
+      if (value == null || value.length == 0) return 'valid_enter_phone'.tr;
+      Pattern pattern = r'^(?:[+0]9)?[0-9]{10}$';
+      RegExp regex = new RegExp(pattern);
+      if (!regex.hasMatch(value)) return 'valid_phone'.tr;
+    };
+  }
+
   static validateFullName() {
     return (value) {
       if (value == null || value.length == 0) {
