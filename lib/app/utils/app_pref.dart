@@ -9,7 +9,8 @@ class AppPref {
 
   static final BehaviorSubject _userBehavior = BehaviorSubject<UserModel>();
 
-  static initListener() {
+  static initListener() async{
+    await GetStorage.init("AppPref");
     _box.listenKey('user', (user) {
       _userBehavior.add(user);
     });
@@ -29,11 +30,4 @@ class AppPref {
   }
 
   static Stream get watchUser => _userBehavior.stream;
-
-  static set config(ConfigModel _config) => _box.write('config', _config);
-
-  static ConfigModel get config {
-    final _ = _box.read('config');
-    return _ is ConfigModel ? _ : ConfigModel.fromJson(_box.read('config'));
-  }
 }

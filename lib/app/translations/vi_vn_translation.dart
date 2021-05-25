@@ -6,8 +6,6 @@ final Map<String, String> viVN = {
   'accept': "Chấp nhận",
   'cancel': 'Huỷ',
 
-  'welcome': 'Chào mừng bạn đến\nwerewolf!',
-  'welcome_description': 'Kết nối và giải trí cùng bạn bè.',
   'sign_in': 'Đăng nhập',
   'sign_up': 'Đăng ký',
 
@@ -25,6 +23,5 @@ final Map<String, String> viVN = {
   "valid_phone": "Số điện thoại chưa đúng định dạng",
   "valid_password": "Mật khẩu phải chứa ít nhất 6 ký tự",
 
-  'play_now': 'Chơi ngay',
   'disconnect_to_server' : 'Mất kết nối tới máy chủ!'
 };

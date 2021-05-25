@@ -20,7 +20,6 @@ void main() async {
   await SystemChrome.setEnabledSystemUIOverlays([]);
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await GetStorage.init("AppPref");
   AppPref.initListener();
 
   runApp(GetMaterialApp(
