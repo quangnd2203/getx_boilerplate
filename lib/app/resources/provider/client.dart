@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
-import 'package:werewolf_client/app/constants/constants.dart';
-import 'package:werewolf_client/app/utils/utils.dart';
+
+import '../../constants/constants.dart';
+import '../../utils/utils.dart';
 
 class AppClients extends DioForNative {
   static const String GET = "GET";
@@ -11,18 +12,18 @@ class AppClients extends DioForNative {
   static const String PUT = "PUT";
   static const String DELETE = "DELETE";
 
-  static AppClients _instance;
+  static AppClients? _instance;
 
   factory AppClients(
-      {String baseUrl = AppEndpoint.BASE_URL, BaseOptions options}) {
+      {String baseUrl = AppEndpoint.BASE_URL, BaseOptions? options}) {
     if (_instance == null)
       _instance = AppClients._(baseUrl: baseUrl, options: options);
-    if (options != null) _instance.options = options;
-    _instance.options.baseUrl = baseUrl;
-    return _instance;
+    if (options != null) _instance!.options = options;
+    _instance!.options.baseUrl = baseUrl;
+    return _instance!;
   }
 
-  AppClients._({String baseUrl = AppEndpoint.BASE_URL, BaseOptions options})
+  AppClients._({String baseUrl = AppEndpoint.BASE_URL, BaseOptions? options})
       : super(options) {
     this.interceptors.add(InterceptorsWrapper(
           onRequest: _requestInterceptor,

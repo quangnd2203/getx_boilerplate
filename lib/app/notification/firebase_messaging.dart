@@ -30,10 +30,10 @@ class FirebaseCloudMessaging {
   }
 
   static _handler(RemoteMessage message, {bool onlyShow = false}) {
-    Data payload = Data.fromJson(message.data);
+    FCMData payload = FCMData.fromJson(message.data);
     if (onlyShow) {
-      LocalNotification.showNotification(message.notification.title,
-          message.notification.body, payload.toString());
+      LocalNotification.showNotification(
+          message.notification?.title, message.notification?.body, payload.toString());
     } else {
       selectNotificationSubject.add(payload.toString());
     }

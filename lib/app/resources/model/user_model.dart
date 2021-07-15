@@ -1,12 +1,12 @@
 class UserModel {
-  int id;
-  String fullName;
-  String email;
-  dynamic avatar;
-  String username;
-  String password;
-  int score;
-  int coin;
+  int? id;
+  String? fullName;
+  String? email;
+  String? avatar;
+  String? username;
+  String? password;
+  int? score;
+  int? coin;
 
   UserModel({
       this.id, 
@@ -29,8 +29,8 @@ class UserModel {
     coin = json["coin"];
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
+  Map<String?, dynamic> toJson() {
+    var map = <String?, dynamic>{};
     map["id"] = id;
     map["fullName"] = fullName;
     map["email"] = email;

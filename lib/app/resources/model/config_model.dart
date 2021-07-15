@@ -1,14 +1,14 @@
 class ConfigModel {
-  int id;
-  String versionAndroid;
-  int versionNumberAndroid;
-  String versionIos;
-  int versionNumberIos;
-  int requiredVersionAndroid;
-  int requiredVersionIos;
-  String storeAndroid;
-  String storeIos;
-  int enableAds;
+  int? id;
+  String? versionAndroid;
+  int? versionNumberAndroid;
+  String? versionIos;
+  int? versionNumberIos;
+  int? requiredVersionAndroid;
+  int? requiredVersionIos;
+  String? storeAndroid;
+  String? storeIos;
+  int? enableAds;
 
   ConfigModel(
       {this.id,
@@ -22,7 +22,7 @@ class ConfigModel {
       this.storeIos,
       this.enableAds});
 
-  String storeIosToUrl() {
+  String? storeIosToUrl() {
     return "https://apps.apple.com/us/app/id${this.storeIos}";
   }
 
@@ -41,8 +41,8 @@ class ConfigModel {
     enableAds = json['enable_ads'];
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
+  Map<String?, dynamic> toJson() {
+    var map = <String?, dynamic>{};
     map["id"] = id;
     map["version_android"] = versionAndroid;
     map["version_number_android"] = versionNumberAndroid;

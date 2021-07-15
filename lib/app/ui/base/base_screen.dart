@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 
+import '../ui.dart';
+
 class BaseScreen<T> extends GetView<T> with ResponsiveWidget {
   @override
   Widget build(BuildContext context) {
-    return buildUi(context: context);
+    return WidgetLoadingFullScreen(child: buildUi(context));
   }
 
   @override
@@ -31,7 +33,7 @@ abstract class ResponsiveWidget {
 
   Widget buildMobile(BuildContext context);
 
-  Widget buildUi({@required BuildContext context}) {
+  Widget buildUi(BuildContext context) {
     return ResponsiveBuilder(builder: (context, sizeInfo) {
       if (sizeInfo.deviceScreenType == DeviceScreenType.desktop) {
         return buildDesktop(context);

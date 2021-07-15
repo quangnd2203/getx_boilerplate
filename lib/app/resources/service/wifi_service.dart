@@ -5,10 +5,10 @@ import 'package:connectivity/connectivity.dart';
 typedef WifiListener = Function(bool enabled);
 
 class WifiService {
-  StreamSubscription<ConnectivityResult> _subscription;
+  StreamSubscription<ConnectivityResult>? _subscription;
 
-  WifiService({WifiListener listener}) {
-    if (_subscription != null) _subscription.cancel();
+  WifiService({WifiListener? listener}) {
+    if (_subscription != null) _subscription!.cancel();
     _subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -30,6 +30,6 @@ class WifiService {
   }
 
   close() {
-    _subscription.cancel();
+    _subscription?.cancel();
   }
 }

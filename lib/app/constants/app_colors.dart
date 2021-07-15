@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import '../extensions/extensions.dart';
+import '../ui/ui.dart';
 
-const Color PRIMARY_COLOR = Color.fromRGBO(67, 0, 251, 1);
-const Color PRIMARY_DARK_COLOR = Color.fromRGBO(33, 1, 202, 1);
-const Color PRIMARY_LIGHT_COLOR = Color.fromRGBO(148, 145, 199, 1);
+class AppColors {
+  AppColors._();
 
-const Color TEXT_COLOR = Color.fromRGBO(16, 5, 55, 1);
-const Color TEXT_HINT_COLOR = Color.fromRGBO(16, 5, 55, .6);
+  static Color get primary => HexColor.fromHex('#E2AE5D');
+
+  static Color get text => HexColor.fromHex('#333333');
+
+  static Color byTheme(BuildContext context, {required Color light, required Color dark}) =>
+      AppThemeMode.of(context).isDark ? dark : light;
+
+  static Color backgroundByTheme(BuildContext context, {Color? light, Color? dark}) =>
+      AppThemeMode.of(context).isDark ? dark ?? text : light ?? Colors.white;
+
+  static Color textByTheme(BuildContext context, {Color? light, Color? dark}) =>
+      AppThemeMode.of(context).isDark ? dark ?? Colors.white : light ?? text;
+}

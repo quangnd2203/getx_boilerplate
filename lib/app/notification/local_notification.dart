@@ -4,7 +4,7 @@ import 'notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
-NotificationAppLaunchDetails notificationAppLaunchDetails;
+NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 class LocalNotification {
   static const String _id = 'EnglishChallengeID';
@@ -25,20 +25,21 @@ class LocalNotification {
         requestBadgePermission: true,
         requestSoundPermission: true,
         onDidReceiveLocalNotification:
-            (int id, String title, String body, String payload) async {
+            (int id, String? title, String? body, String? payload) async {
           selectNotificationSubject.add(payload);
           flutterLocalNotificationsPlugin.cancel(id);
         });
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String payload) async {
+        onSelectNotification: (String? payload) async {
       selectNotificationSubject.add(payload);
     });
   }
 
   static Future<void> showNotification(
-      String title, String body, String payload) async {
+      String? title, String? body, String? payload) async {
+    if(title == null || body == null) return;
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         _id, _chanel, _description,
         importance: Importance.max, priority: Priority.high, ticker: 'ticker');

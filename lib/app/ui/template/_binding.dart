@@ -1,6 +1,8 @@
 // import 'package:get/get.dart';
 //
-// class Binding extends Bindings{
+// import '../ui.dart';
+//
+// class Binding extends Bindings {
 //   @override
 //   void dependencies() {
 //     Get.put<Controller>(Controller());
