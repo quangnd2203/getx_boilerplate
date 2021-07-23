@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
+import 'dart:math' as Math;
 
+import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -11,6 +14,7 @@ enum SocialType { facebook, google, twitter, apple }
 class LoginSocialResult {
   bool success;
   dynamic id;
+  String? code;
   String? accessToken;
   String? secretToken;
   SocialType type;
@@ -18,10 +22,11 @@ class LoginSocialResult {
   String? email;
   String? avatar;
 
-  bool get isSuccess => success ?? false;
+  bool get isSuccess => success;
 
   LoginSocialResult(
       {this.accessToken,
+      this.code,
       this.secretToken,
       this.success = false,
       this.email,
@@ -29,6 +34,17 @@ class LoginSocialResult {
       this.id,
       this.avatar,
       this.fullName});
+}
+
+class LoginSocialFirebaseResult {
+  bool success;
+  User? user;
+  String? token;
+  String? msg;
+
+  bool get isSuccess => success;
+
+  LoginSocialFirebaseResult({this.success = false, this.msg, this.token, this.user});
 }
 
 class SocialService {
@@ -135,7 +151,11 @@ class SocialService {
       AppleIDAuthorizationScopes.email,
       AppleIDAuthorizationScopes.fullName,
     ]);
-
+    result.code = credential.authorizationCode;
+    if (credential.identityToken != null) {
+      result.accessToken = credential.identityToken;
+      result.fullName = (credential.givenName ?? '') + (credential.familyName ?? '');
+    }
     print(credential);
 
     // This is the endpoint that will convert an authorization code obtained
@@ -161,5 +181,117 @@ class SocialService {
     // and you can now set this as the app's session
     // print(session);
     return result;
+  }
+}
+
+class SocialServiceFirebase {
+  SocialServiceFirebase._();
+
+  static SocialServiceFirebase? _instance;
+
+  factory SocialServiceFirebase() {
+    if (_instance == null) _instance = SocialServiceFirebase._();
+    return _instance!;
+  }
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<LoginSocialFirebaseResult> signIn(SocialType type) async {
+    LoginSocialFirebaseResult result = LoginSocialFirebaseResult();
+    UserCredential? userCredential;
+    AuthCredential? authCredential;
+    switch (type) {
+      case SocialType.google:
+        authCredential = await _loginGoogle();
+        break;
+      case SocialType.facebook:
+        authCredential = await _loginFacebook();
+        break;
+      case SocialType.apple:
+        authCredential = await _loginApple();
+        break;
+      default:
+        break;
+    }
+
+    if (authCredential != null) {
+      try {
+        userCredential = await _auth.signInWithCredential(authCredential);
+        result.token = (await userCredential.user!.getIdTokenResult()).token;
+        result.user = userCredential.user;
+        result.success = true;
+      } catch (e) {
+        print('loginSocial failure: error $e');
+      }
+    } else
+      print('loginSocial failure: authCredential == null');
+    return result;
+  }
+
+  Future<AuthCredential?> _loginGoogle() async {
+    final googleLogin = GoogleSignIn(scopes: ["email"]);
+
+    if (await googleLogin.isSignedIn()) await googleLogin.signOut();
+
+    GoogleSignInAccount? result = await googleLogin.signIn();
+    final auth = await result?.authentication;
+    if (auth != null) {
+      print("${auth.accessToken}");
+      return GoogleAuthProvider.credential(idToken: auth.idToken, accessToken: auth.accessToken);
+    }
+
+    return null;
+  }
+
+  Future<AuthCredential?> _loginFacebook() async {
+    await FacebookAuth.instance.logOut();
+    final LoginResult result = await FacebookAuth.instance.login();
+    switch (result.status) {
+      case LoginStatus.success:
+        print("_loginFacebook ok");
+        print("${result.accessToken!.token}");
+        return FacebookAuthProvider.credential(result.accessToken!.token);
+      case LoginStatus.cancelled:
+        print("_loginFacebook cancel");
+        return null;
+      case LoginStatus.failed:
+        print("_loginFacebook failed: ${result.message}");
+        return null;
+      default:
+        break;
+    }
+  }
+
+  Future<AuthCredential?> _loginApple() async {
+    AuthCredential? authCredential;
+
+    final rawNonce = generateNonce();
+    final nonce = sha256ofString(rawNonce);
+
+    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ], nonce: nonce);
+
+    if (credential.identityToken == null) return authCredential;
+    authCredential = OAuthProvider("apple.com").credential(
+      idToken: credential.identityToken,
+      rawNonce: rawNonce,
+    );
+  }
+
+  /// Generates a cryptographically secure random nonce, to be included in a
+  /// credential request.
+  String generateNonce([int length = 32]) {
+    final charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = Math.Random.secure();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+  }
+
+  /// Returns the sha256 hash of [input] in hex notation.
+  String sha256ofString(String input) {
+    final bytes = utf8.encode(input);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
   }
 }
