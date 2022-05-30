@@ -3,21 +3,20 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 class LocalNotification {
-  static const String _id = 'EnglishChallengeID';
-  static const String _chanel = 'EnglishChallengeChannel';
-  static const String _description = 'Description';
+  static const String _id = '_ID';
+  static const String _channel = '_Channel';
+  static const String _description = '_Description';
 
   static setup() async {
     //setup local notification
     notificationAppLaunchDetails =
-        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -33,20 +32,19 @@ class LocalNotification {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
-      selectNotificationSubject.add(payload);
-    });
+          selectNotificationSubject.add(payload);
+        });
   }
 
-  static Future<void> showNotification(
-      String? title, String? body, String? payload) async {
-    if(title == null || body == null) return;
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        _id, _chanel, _description,
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+  static Future<void> showNotification(String? title, String? body, String? payload) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(_id, _channel,
+        channelDescription: _description,
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, '${title ?? 'Say hi!'} ',
         '${body ?? 'Nice to meet you again!'}', platformChannelSpecifics,
         payload: payload);

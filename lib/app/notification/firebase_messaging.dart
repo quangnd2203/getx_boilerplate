@@ -1,14 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-import 'local_notification.dart';
 import 'notification.dart';
-import 'notification_data.dart';
 
+//This method will be call in background where have a new message
 Future<void> backgroundMessageHandler(RemoteMessage message) async {
-  log("OnBackgroundMessage: $message");
-  return FirebaseCloudMessaging._handler(message);
+  //Do not thing...
+  // return FirebaseCloudMessaging._handler(message);
 }
 
 class FirebaseCloudMessaging {
@@ -16,24 +14,27 @@ class FirebaseCloudMessaging {
 
   static initFirebaseMessaging() async {
     if (Platform.isIOS) {
-      instance.requestPermission();
+      await instance.requestPermission();
     }
     FirebaseMessaging.onMessage.listen((message) {
-      log("OnMessage: $message");
-      _handler(message, onlyShow: true);
+      log("OnMessage: ${message.data}");
+      _handler(message, show: true);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      log("OnMessageOpenedApp: $message");
-      _handler(message);
+      log("OnMessageOpenedApp: ${message.data}");
+      _handler(message, show: true);
     });
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
+    final initMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initMessage != null) _handler(initMessage);
   }
 
-  static _handler(RemoteMessage message, {bool onlyShow = false}) {
-    FCMData payload = FCMData.fromJson(message.data);
-    if (onlyShow) {
-      LocalNotification.showNotification(
-          message.notification?.title, message.notification?.body, payload.toString());
+  static _handler(RemoteMessage message, {bool show = false}) {
+    Data payload = Data.fromJson(message.data);
+    if (show) {
+      LocalNotification.showNotification(message.notification?.title,
+          message.notification?.body, payload.toString());
+      notificationSubject.add(true);
     } else {
       selectNotificationSubject.add(payload.toString());
     }

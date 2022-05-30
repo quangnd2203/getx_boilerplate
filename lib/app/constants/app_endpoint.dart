@@ -1,19 +1,17 @@
 class AppEndpoint {
   AppEndpoint._();
 
-  static const String BASE_URL = "http://172.20.10.2:8888";
+  static const String BASE_URL = "http://relax365.net";
 
-  static const String BASE_URL_SOCKET = "http://172.20.10.2:3000";
-
-  static const int connectionTimeout = 5000;
-  static const int receiveTimeout = 5000;
+  static const int connectionTimeout = 1500;
+  static const int receiveTimeout = 1500;
   static const String keyAuthorization = "Authorization";
 
-  static const String GET_CONFIG = "/api/get/config";
+  static const int SUCCESS = 200;
+  static const int ERROR_TOKEN = 401;
+  static const int ERROR_VALIDATE = 422;
+  static const int ERROR_SERVER = 500;
+  static const int ERROR_DISCONNECT = -1;
 
-  static const String POST_SIGN_UP = "/api/post/signUp";
-
-  static const String POST_SIGN_IN = "/api/post/signIn";
-
-  static const String GET_PROFILE = "/api/get/profile";
+  static const String MORE_APPS = '/hsmoreapp';
 }

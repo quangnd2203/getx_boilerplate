@@ -27,18 +27,18 @@ class AppPref {
 
   static String? get themeModel => _box.get('themeModel');
 
-  static set user(UserModel? data) {
-    if (data == null)
-      _box.put('user', '');
-    else
-      _box.put('user', jsonEncode(data.toJson()));
-  }
-
-  static UserModel? get user {
-    final data = _box.get('user');
-    if (data == null || data?.isEmpty) return null;
-    return UserModel.fromJson(jsonDecode(data));
-  }
+  // static set user(UserModel? data) {
+  //   if (data == null)
+  //     _box.put('user', '');
+  //   else
+  //     _box.put('user', jsonEncode(data.toJson()));
+  // }
+  //
+  // static UserModel? get user {
+  //   final data = _box.get('user');
+  //   if (data == null || data?.isEmpty) return null;
+  //   return UserModel.fromJson(jsonDecode(data));
+  // }
 
   static Stream<BoxEvent> get userWatch => _box.watch(key: 'user');
 }

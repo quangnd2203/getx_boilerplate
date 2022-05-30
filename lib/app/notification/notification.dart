@@ -16,22 +16,25 @@ notificationInitialed() {
   LocalNotification.setup();
 }
 
-final BehaviorSubject<String?> selectNotificationSubject = BehaviorSubject<String?>();
+final BehaviorSubject<String?> selectNotificationSubject =
+BehaviorSubject<String?>();
+final BehaviorSubject<bool> notificationSubject = BehaviorSubject<bool>();
 
 StreamSubscription? _subscription;
 
-configureSelectNotificationSubject(Function(FCMData payload) redirect) {
-  _subscription = selectNotificationSubject.stream.listen((String? _payload) async {
-    if (_payload == null) return;
-    try {
-      FCMData payload = FCMData.fromJson(jsonDecode(_payload));
-      redirect(payload);
-    } catch (e) {
-      print('Error redirect by notification: $e');
-    } finally {
-      selectNotificationSubject.add(null);
-    }
-  });
+configureSelectNotificationSubject(Function(Data payload) redirect) {
+  _subscription =
+      selectNotificationSubject.stream.listen((String? _payload) async {
+        if (_payload == null) return;
+        try {
+          Data payload = Data.fromJson(jsonDecode(_payload));
+          redirect(payload);
+        } catch (e) {
+          print('Error redirect by notification: $e');
+        } finally {
+          selectNotificationSubject.add(null);
+        }
+      });
 }
 
 unConfigureSelectNotificationSubject() {

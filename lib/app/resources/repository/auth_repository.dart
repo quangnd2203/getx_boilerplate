@@ -1,51 +1,35 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'dart:io';
 
-import '../provider/api_imp.dart';
-import '../model/model.dart';
-import '../provider/api.dart';
-import '../resources.dart';
+import 'package:dio/dio.dart';
 
-enum SignInType { normal, google, facebook }
-
-class AuthRepository {
-  AuthRepository._(this._api);
+class AuthRepository{
+  AuthRepository._();
 
   static AuthRepository? _instance;
 
-  factory AuthRepository({AppApi? api}) {
-    if (_instance == null)
-      _instance = AuthRepository._((api ?? AppApiImp()));
-    else if (api != null) _instance!._api = api;
+  factory AuthRepository() {
+    if (_instance == null) _instance = AuthRepository._();
     return _instance!;
   }
 
-  AppApi _api;
-
-// Future<NetworkResponse<SignInResponseModel>> postSignIn(
-//     {required String username,
-//     required String password,
-//     required SignInType type,
-//     required LoginSocialResult result}) async {
-//   Map<String, dynamic> params;
-//   switch (type) {
-//     case SignInType.normal:
-//       params = {
-//         'username': username,
-//         'password': password,
-//         'type': describeEnum(type)
-//       };
-//       break;
-//     case SignInType.google:
-//       params = {'type': describeEnum(type)};
-//       break;
-//     case SignInType.facebook:
-//       params = {'type': describeEnum(type)};
-//       break;
-//     default:
-//       break;
+///Example
+///http://relax365.net/hsmoreapp?os=
+// Future<NetworkState<OtherApplication>> getMoreApps() async {
+//   bool isDisconnect = await WifiService.isDisconnect();
+//   if (isDisconnect) return NetworkState.withDisconnect();
+//   try {
+//     String api = AppEndpoint.MORE_APPS;
+//     Map<String, dynamic> params = {
+//       "os" : Platform.isAndroid ? "android" : "ios"
+//     };
+//     Response response = await AppClients().get(api, queryParameters: params);
+//     return NetworkState(
+//       status: AppEndpoint.SUCCESS,
+//       data: OtherApplication.fromJson(jsonDecode(response.data)),
+//     );
+//   } on DioError catch (e) {
+//     return NetworkState.withError(e);
 //   }
-//
-//   return await _api.postSignIn(
-//       params, (data) => SignInResponseModel.fromJson(data));
 // }
 }
