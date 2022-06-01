@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import '../extensions/extensions.dart';
 import '../ui/ui.dart';
+import '../utils/app_utils.dart';
 
 class AppColors {
   AppColors._();
 
-  static Color get primary => HexColor.fromHex('#E2AE5D');
+  static Color get primary => AppUtils.valueByMode(values: [primaryDark, primaryLight]);
 
-  static Color get text => HexColor.fromHex('#333333');
+  static Color get primaryDark => fromHex('#FF6915');
 
-  static Color byTheme(BuildContext context, {required Color light, required Color dark}) =>
-      AppThemeMode.of(context).isDark ? dark : light;
+  static Color get primaryLight => fromHex('#FF6915');
 
-  static Color backgroundByTheme(BuildContext context, {Color? light, Color? dark}) =>
-      AppThemeMode.of(context).isDark ? dark ?? text : light ?? Colors.white;
+  static Color get text => AppUtils.valueByMode(values: [textDark, textLight]);
 
-  static Color textByTheme(BuildContext context, {Color? light, Color? dark}) =>
-      AppThemeMode.of(context).isDark ? dark ?? Colors.white : light ?? text;
+  static Color get textDark => Colors.white;
+
+  static Color get textLight => Colors.black;
+
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
 }

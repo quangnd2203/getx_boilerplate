@@ -45,6 +45,8 @@ dependencies:
   modal_bottom_sheet: ^2.0.1
   responsive_builder: ^0.4.2
   device_info_plus: ^3.2.3
+  overlay_support: ^2.0.0
+  get_storage: ^2.0.3
 
 flutter:
   uses-material-design: true

@@ -2,43 +2,42 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rxdart/rxdart.dart';
 import '../resources/resources.dart';
 
-class AppPref {
-  AppPref._();
+class AppPrefs {
+  AppPrefs._();
 
-  static late Box _box;
+  static final GetStorage _box = GetStorage('AppPref');
+
+  static final BehaviorSubject _userBehavior = BehaviorSubject<dynamic>();
 
   static initListener() async {
-    if (!kIsWeb) {
-      Directory appDocDirectory = await getApplicationDocumentsDirectory();
-      Hive..init(appDocDirectory.path);
-    }
-    _box = await Hive.openBox('AppPref');
+    await GetStorage.init("AppPref");
+    _box.listenKey('user', (user) {
+      _userBehavior.add(user);
+    });
   }
 
-  static set accessToken(String? token) => _box.put('accessToken', token);
+  static set appMode(String? data) => _box.write('appMode', data);
 
-  static String? get accessToken => _box.get('accessToken');
+  static String? get appMode => _box.read('appMode');
 
-  static set themeModel(String? theme) => _box.put('themeModel', theme);
+  static set accessToken(String? data) => _box.write('accessToken', data);
 
-  static String? get themeModel => _box.get('themeModel');
+  static String? get accessToken => _box.read('accessToken');
 
-  // static set user(UserModel? data) {
-  //   if (data == null)
-  //     _box.put('user', '');
-  //   else
-  //     _box.put('user', jsonEncode(data.toJson()));
+  // static set user(Apps? _user) {
+  //   _box.write('user', _user);
   // }
   //
-  // static UserModel? get user {
-  //   final data = _box.get('user');
-  //   if (data == null || data?.isEmpty) return null;
-  //   return UserModel.fromJson(jsonDecode(data));
+  // static Apps? get user {
+  //   final _ = _box.read('user');
+  //   if (_ == null) return null;
+  //   return _ is Apps ? _ : Apps.fromJson(_box.read('user'));
   // }
 
-  static Stream<BoxEvent> get userWatch => _box.watch(key: 'user');
+  static Stream get watchUser => _userBehavior.stream;
 }

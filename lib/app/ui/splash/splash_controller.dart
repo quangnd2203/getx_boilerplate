@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../routes/app_pages.dart';
 import '../ui.dart';
 
 class SplashController extends BaseController {
@@ -12,5 +13,7 @@ class SplashController extends BaseController {
 
   Future getConfig() async {}
 
-  getProfile() async {}
+  getProfile() async {
+    Get.toNamed(Routes.NAVIGATION);
+  }
 }

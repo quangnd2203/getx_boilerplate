@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-enum AppThemeModeType { light, dark }
+class ThemeSwitcher extends InheritedWidget {
+  final _ThemeSwitcherWidgetState data;
 
-class AppThemeMode extends InheritedWidget {
-  final _WidgetThemeSwitcherState data;
-
-  const AppThemeMode({Key? key, required this.data, required Widget child})
+  const ThemeSwitcher({Key? key, required this.data, required Widget child})
       : super(child: child, key: key);
 
-  static _WidgetThemeSwitcherState of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<AppThemeMode>()!.data;
+  static _ThemeSwitcherWidgetState of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ThemeSwitcher>()!.data;
   }
 
   @override
@@ -18,34 +16,31 @@ class AppThemeMode extends InheritedWidget {
   }
 }
 
-class WidgetThemeSwitcher extends StatefulWidget {
+class ThemeSwitcherWidget extends StatefulWidget {
   final Widget child;
-  final AppThemeModeType init;
+  final ThemeData initialThemeData;
 
-  const WidgetThemeSwitcher({Key? key, required this.child, required this.init}) : super(key: key);
+  const ThemeSwitcherWidget(
+      {Key? key, required this.child, required this.initialThemeData})
+      : super(key: key);
 
   @override
-  _WidgetThemeSwitcherState createState() => _WidgetThemeSwitcherState();
+  _ThemeSwitcherWidgetState createState() => _ThemeSwitcherWidgetState();
 }
 
-class _WidgetThemeSwitcherState extends State<WidgetThemeSwitcher> {
-  late AppThemeModeType? mode;
+class _ThemeSwitcherWidgetState extends State<ThemeSwitcherWidget> {
+  ThemeData? themeData;
 
-  bool get isLight => mode == AppThemeModeType.light;
-
-  bool get isDark => mode == AppThemeModeType.dark;
-
-  void switchMode({AppThemeModeType? mode}) {
-    if (mode != null && this.mode != mode)
-      setState(() {
-        this.mode = mode;
-      });
+  void switchMode({ThemeData? themeData}) {
+    setState(() {
+      if (themeData != null) this.themeData = themeData;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    mode ??= widget.init;
-    return AppThemeMode(
+    themeData = themeData ?? widget.initialThemeData;
+    return ThemeSwitcher(
       data: this,
       child: widget.child,
     );

@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import '../../constants/constants.dart';
 import '../ui.dart';
 
-class WidgetLoadingFullScreen<T extends BaseController> extends StatelessWidget {
+class WidgetLoadingFullScreen<T extends BaseController>
+    extends StatelessWidget {
   final Widget child;
   final Color? colorBackground;
   final Color? colorLoading;
@@ -20,7 +21,9 @@ class WidgetLoadingFullScreen<T extends BaseController> extends StatelessWidget 
       return Stack(
         children: <Widget>[
           child,
-          _.loading.value ? _LoadingWidget(colorBackground, colorLoading) : Container(),
+          _.loading.value
+              ? _LoadingWidget(colorBackground, colorLoading)
+              : Container(),
         ],
       );
     });
@@ -36,14 +39,16 @@ class _LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: background ?? Colors.black45,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        alignment: Alignment.center,
-        child: Center(
-            child: SpinKitCircle(
+      color: background ?? Colors.black45,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      alignment: Alignment.center,
+      child: Center(
+        child: SpinKitCircle(
           color: colorLoading ?? AppColors.primary,
           size: 55,
-        )));
+        ),
+      ),
+    );
   }
 }

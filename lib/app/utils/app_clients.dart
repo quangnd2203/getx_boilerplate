@@ -30,7 +30,7 @@ class AppClients extends DioForNative {
   }
 
   _requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
-    String? accessToken = AppPref.accessToken;
+    String? accessToken = AppPrefs.accessToken;
 
     switch (options.method) {
       case AppClients.GET:
