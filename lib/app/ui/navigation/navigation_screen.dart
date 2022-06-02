@@ -18,9 +18,9 @@ class NavigationScreen extends BaseScreen<NavigationController> {
   Widget _buildBody() {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: controller.raw.value.length,
+      itemCount: controller.raw.length,
       itemBuilder: (context, index){
-        final item = controller.raw.value[index];
+        final item = controller.raw[index];
         return Container(
           padding: const EdgeInsets.all(16),
           margin: const EdgeInsets.only(bottom: 16),

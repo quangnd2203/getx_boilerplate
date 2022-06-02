@@ -42,7 +42,7 @@ class _LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: background ?? Colors.black45,
+      color: background ?? Colors.black12,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
