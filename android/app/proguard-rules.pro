@@ -52,3 +52,9 @@
   public *;
 }
 -keep class com.dexterous.** { *; }
+
+### BackendLess
+#-dontwarn com.backendless.**
+#-dontwarn weborb.**
+#-keep class weborb.** {*;}
+#-keep class com.backendless.** {*;}
