@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../ui.dart';
 
-class BaseScreen<T> extends GetView<T> with ResponsiveWidget {
+class BaseScreen<T extends BaseController> extends GetView<T> with ResponsiveWidget {
   @override
   Widget build(BuildContext context) {
-    return WidgetLoadingFullScreen(child: buildUi(context));
+    return WidgetLoadingFullScreen<T>(child: buildUi(context));
   }
 
   @override

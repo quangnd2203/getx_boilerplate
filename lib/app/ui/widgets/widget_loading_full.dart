@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../../constants/constants.dart';
 import '../ui.dart';
@@ -17,16 +18,18 @@ class WidgetLoadingFullScreen<T extends BaseController>
 
   @override
   Widget build(BuildContext context) {
-    return GetX<T>(builder: (_) {
-      return Stack(
-        children: <Widget>[
-          child,
-          _.loading.value
-              ? _LoadingWidget(colorBackground, colorLoading)
-              : Container(),
-        ],
-      );
-    });
+    return GetX<T>(
+      builder: (controller) {
+        return Stack(
+          children: <Widget>[
+            child,
+            controller.loading.value
+                ? _LoadingWidget(colorBackground, colorLoading)
+                : Container(),
+          ],
+        );
+      },
+    );
   }
 }
 
