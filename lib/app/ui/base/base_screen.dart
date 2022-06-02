@@ -7,7 +7,7 @@ import '../ui.dart';
 class BaseScreen<T extends BaseController> extends GetView<T> with ResponsiveWidget {
   @override
   Widget build(BuildContext context) {
-    return WidgetLoadingFullScreen<T>(child: buildUi(context));
+    return WidgetLoadingFullScreen<T>(builder: (controller) => buildUi(context),);
   }
 
   @override

@@ -6,6 +6,6 @@ import 'constants.dart';
 normalTheme(BuildContext context) {
   return ThemeData(
     fontFamily: AppTextStyles.fontFamilyRoboto,
-    brightness: AppUtils.valueByMode(values: [Brightness.dark, Brightness.light]),
+    brightness: AppUtils.valueByMode(values: [Brightness.light, Brightness.dark]),
   );
 }

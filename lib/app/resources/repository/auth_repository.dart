@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
+import '../../constants/constants.dart';
+import '../../utils/app_clients.dart';
+import '../resources.dart';
 
-class AuthRepository{
+class AuthRepository {
   AuthRepository._();
 
   static AuthRepository? _instance;
@@ -13,23 +15,22 @@ class AuthRepository{
     return _instance!;
   }
 
-///Example
-///http://relax365.net/hsmoreapp?os=
-// Future<NetworkState<OtherApplication>> getMoreApps() async {
-//   bool isDisconnect = await WifiService.isDisconnect();
-//   if (isDisconnect) return NetworkState.withDisconnect();
-//   try {
-//     String api = AppEndpoint.MORE_APPS;
-//     Map<String, dynamic> params = {
-//       "os" : Platform.isAndroid ? "android" : "ios"
-//     };
-//     Response response = await AppClients().get(api, queryParameters: params);
-//     return NetworkState(
-//       status: AppEndpoint.SUCCESS,
-//       data: OtherApplication.fromJson(jsonDecode(response.data)),
-//     );
-//   } on DioError catch (e) {
-//     return NetworkState.withError(e);
-//   }
-// }
+// /Example
+  Future<NetworkState> testApi() async {
+    bool isDisconnect = await WifiService.isDisconnect();
+    if (isDisconnect) return NetworkState.withDisconnect();
+    try {
+      String api = AppEndpoint.TEST_API;
+      // Map<String, dynamic> params = {
+      //   "os": Platform.isAndroid ? "android" : "ios"
+      // };
+      Response response = await AppClients().get(api);
+      return NetworkState(
+        status: AppEndpoint.SUCCESS,
+        data: (response.data as List<dynamic>).map((e) => TestModel.fromJson(e)).toList(),
+      );
+    } on DioError catch (e) {
+      return NetworkState.withError(e);
+    }
+  }
 }

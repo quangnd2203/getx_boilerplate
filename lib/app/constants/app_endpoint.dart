@@ -2,6 +2,7 @@ class AppEndpoint {
   AppEndpoint._();
 
   static const String BASE_URL = "http://relax365.net";
+  static const String TEST_API = "https://jsonplaceholder.typicode.com/posts";
 
   static const int connectionTimeout = 1500;
   static const int receiveTimeout = 1500;

@@ -8,12 +8,12 @@ import '../ui.dart';
 
 class WidgetLoadingFullScreen<T extends BaseController>
     extends StatelessWidget {
-  final Widget child;
+  final Widget Function(T) builder;
   final Color? colorBackground;
   final Color? colorLoading;
 
   const WidgetLoadingFullScreen(
-      {Key? key, required this.child, this.colorBackground, this.colorLoading})
+      {Key? key, required this.builder, this.colorBackground, this.colorLoading})
       : super(key: key);
 
   @override
@@ -22,10 +22,10 @@ class WidgetLoadingFullScreen<T extends BaseController>
       builder: (controller) {
         return Stack(
           children: <Widget>[
-            child,
+            builder(controller),
             controller.loading.value
                 ? _LoadingWidget(colorBackground, colorLoading)
-                : Container(),
+                : SizedBox(),
           ],
         );
       },
