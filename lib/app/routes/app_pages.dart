@@ -6,7 +6,7 @@ part './app_routes.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(name: Routes.SPLASH, page:()=> SplashScreen(),),
+    GetPage(name: Routes.SPLASH, page:()=> SplashScreen(), binding: SplashBinding()),
 
     GetPage(name: Routes.NAVIGATION, page:()=> NavigationScreen(), binding: NavigationBinding()),
   ];

@@ -10,4 +10,9 @@ class AppImages {
   static final String imgWerewolf = 'assets/images/img_werewolf.jpeg';
 
   static final String bgNavigation = 'assets/images/backgrounds/bg_navigation.webp';
+
+  static png(String name) => 'assets/images/png/$name.png';
+  static jpg(String name) => 'assets/images/jpg/$name.jpg';
+  static svg(String name) => 'assets/images/svg/$name.svg';
+  static lottie(String name) => 'assets/lotties/$name.json';
 }

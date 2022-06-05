@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
   # Notification
-  flutter_local_notifications: ^9.5.3+1
+  flutter_local_notifications: ^9.6.0
   firebase_messaging: ^11.4.1
 
   # Firebase
@@ -41,11 +41,10 @@ dependencies:
   fluttertoast: ^8.0.9
   flutter_svg: ^1.1.0
   path_provider: ^2.0.10
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
   modal_bottom_sheet: ^2.0.1
-  responsive_builder: ^0.4.2
   device_info_plus: ^3.2.3
-  overlay_support: ^2.0.0
+  overlay_support: ^2.0.1
   get_storage: ^2.0.3
 
   #DataBase
@@ -57,23 +56,23 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: NunitoSans
+    - family: HKGrotesk
       fonts:
-        - asset: assets/fonts/NunitoSans-Black.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Black.otf
           weight: 900
-        - asset: assets/fonts/NunitoSans-Black.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Black.otf
           weight: 800
-        - asset: assets/fonts/NunitoSans-Bold.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Bold.otf
           weight: 700
-        - asset: assets/fonts/NunitoSans-Bold.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/NunitoSans-Regular.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Medium.otf
           weight: 500
-        - asset: assets/fonts/NunitoSans-Regular.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Regular.otf
           weight: 400
-        - asset: assets/fonts/NunitoSans-Light.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Light.otf
           weight: 300
-        - asset: assets/fonts/NunitoSans-Light.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Light.otf
           weight: 200
-        - asset: assets/fonts/NunitoSans-Light.ttf
+        - asset: assets/fonts/hk-grotesk/HKGrotesk-Light.otf
           weight: 100

@@ -1,48 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'package:logger/logger.dart';
 import 'package:get/get.dart';
 
 import '../ui.dart';
 
-class BaseScreen<T extends BaseController> extends GetView<T> with ResponsiveWidget {
+abstract class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
   @override
   Widget build(BuildContext context) {
-    return WidgetLoadingFullScreen<T>(builder: (controller) => buildUi(context),);
+    super.build(context);
+    return GetX<T>(
+      builder: (controller) {
+        return WidgetLoadingFullScreen(
+          child: builder()!,
+          loading: controller.loading.value,
+        );
+      },
+    );
   }
 
   @override
-  Widget buildDesktop(BuildContext context) {
+  Widget? builder() {
+    // TODO: implement builder
+    switch(screen.screenType){
+      case ScreenType.Phone: return phone();
+      case ScreenType.Desktop: return desktop();
+      case ScreenType.Tablet: return tablet();
+      case ScreenType.Watch: return watch();
+    }
+  }
+
+  @override
+  Widget desktop() {
     return SizedBox();
   }
 
   @override
-  Widget buildMobile(BuildContext context) {
+  Widget phone() {
     return SizedBox();
   }
 
   @override
-  Widget buildTablet(BuildContext context) {
+  Widget tablet() {
     return SizedBox();
   }
-}
 
-abstract class ResponsiveWidget {
-  Widget buildDesktop(BuildContext context);
-
-  Widget buildTablet(BuildContext context);
-
-  Widget buildMobile(BuildContext context);
-
-  Widget buildUi(BuildContext context) {
-    return ResponsiveBuilder(builder: (context, sizeInfo) {
-      if (sizeInfo.deviceScreenType == DeviceScreenType.desktop) {
-        return buildDesktop(context);
-      } else if (sizeInfo.deviceScreenType == DeviceScreenType.tablet) {
-        return buildTablet(context);
-      } else if (sizeInfo.deviceScreenType == DeviceScreenType.mobile) {
-        return buildMobile(context);
-      }
-      return SizedBox();
-    });
+  @override
+  Widget watch() {
+    return SizedBox();
   }
 }

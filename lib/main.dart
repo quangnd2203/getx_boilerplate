@@ -59,11 +59,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialBinding: SplashBinding(),
       initialRoute: Routes.SPLASH,
       defaultTransition: Transition.cupertino,
       getPages: AppPages.pages,
-      home: SplashScreen(),
       locale: Locale('vi', 'VN'),
       translationsKeys: AppTranslation.translations,
       navigatorObservers: <NavigatorObserver>[MyApp.observer],

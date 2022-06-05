@@ -5,7 +5,7 @@ import 'constants.dart';
 
 normalTheme(BuildContext context) {
   return ThemeData(
-    fontFamily: AppTextStyles.fontFamilyRoboto,
+    fontFamily: AppTextStyles.fontFamilyHkGrotesk,
     brightness: AppUtils.valueByMode(values: [Brightness.light, Brightness.dark]),
   );
 }

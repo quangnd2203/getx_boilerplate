@@ -5,11 +5,10 @@
 //
 // class Screen extends BaseScreen<Controller> {
 //   @override
-//   Widget buildMobile(BuildContext context) {
+//   Widget? builder() {
+//     // TODO: implement builder
 //     return Scaffold(
-//         backgroundColor: Colors.white,
-//         body: Center(
-//             child: SizedBox()
-//         ));
+//       body: _buildBody(),
+//     );
 //   }
 // }

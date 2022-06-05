@@ -6,29 +6,27 @@ import 'package:logger/logger.dart';
 import '../../constants/constants.dart';
 import '../ui.dart';
 
-class WidgetLoadingFullScreen<T extends BaseController>
-    extends StatelessWidget {
-  final Widget Function(T) builder;
+class WidgetLoadingFullScreen extends StatelessWidget {
+  final Widget child;
+  final bool loading;
   final Color? colorBackground;
   final Color? colorLoading;
 
   const WidgetLoadingFullScreen(
-      {Key? key, required this.builder, this.colorBackground, this.colorLoading})
+      {Key? key,
+      required this.child,
+      this.colorBackground,
+      this.colorLoading,
+      this.loading = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetX<T>(
-      builder: (controller) {
-        return Stack(
-          children: <Widget>[
-            builder(controller),
-            controller.loading.value
-                ? _LoadingWidget(colorBackground, colorLoading)
-                : SizedBox(),
-          ],
-        );
-      },
+    return Stack(
+      children: <Widget>[
+        child,
+        loading ? _LoadingWidget(colorBackground, colorLoading) : const SizedBox(),
+      ],
     );
   }
 }
