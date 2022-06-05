@@ -16,12 +16,10 @@ class NavigationController extends BaseController {
   void onInit() async {
     super.onInit();
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      // setLoading(true);
       count.value ++;
       count.refresh();
     });
     await fetchTestApi();
-    // updateCount();
   }
 
   Future fetchTestApi() async {
@@ -29,9 +27,5 @@ class NavigationController extends BaseController {
     if(_.isSuccess){
       raw.assignAll(_.data);
     }
-  }
-
-  updateCount() async {
-    // final timer = ;
   }
 }
