@@ -9,6 +9,10 @@ abstract class BaseScreen<T extends BaseController> extends GetResponsiveView<T>
   Widget build(BuildContext context) {
     super.build(context);
     return GetX<T>(
+      dispose: (state) {
+        Logger().d('DISPOSE: "${this.runtimeType}" - "$T"');
+        Get.delete<T>();
+      },
       builder: (controller) {
         return WidgetLoadingFullScreen(
           child: builder()!,
@@ -48,4 +52,5 @@ abstract class BaseScreen<T extends BaseController> extends GetResponsiveView<T>
   Widget watch() {
     return SizedBox();
   }
+
 }
