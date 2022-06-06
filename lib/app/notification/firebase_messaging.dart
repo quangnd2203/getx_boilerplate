@@ -10,6 +10,8 @@ Future<void> backgroundMessageHandler(RemoteMessage message) async {
 }
 
 class FirebaseCloudMessaging {
+  FirebaseCloudMessaging._();
+
   static final FirebaseMessaging instance = FirebaseMessaging.instance;
 
   static Future<void> initFirebaseMessaging() async {
@@ -42,7 +44,4 @@ class FirebaseCloudMessaging {
     }
   }
 
-  void a(){
-
-  }
 }

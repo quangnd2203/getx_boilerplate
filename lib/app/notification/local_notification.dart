@@ -7,29 +7,28 @@ FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 class LocalNotification {
+  LocalNotification._();
+
   static const String _id = '_ID';
   static const String _channel = '_Channel';
   static const String _description = '_Description';
 
-  static setup() async {
+  static Future<void> setup() async {
     //setup local notification
     notificationAppLaunchDetails =
     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
-    var initializationSettingsIOS = IOSInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
-        onDidReceiveLocalNotification:
-            (int id, String? title, String? body, String? payload) async {
+    final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
           selectNotificationSubject.add(payload);
           flutterLocalNotificationsPlugin.cancel(id);
-        });
-    var initializationSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+        },
+    );
+    final InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS,);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
           selectNotificationSubject.add(payload);
