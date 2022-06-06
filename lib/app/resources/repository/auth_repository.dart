@@ -4,31 +4,33 @@ import '../../utils/app_clients.dart';
 import '../resources.dart';
 
 class AuthRepository {
+
+  factory AuthRepository() {
+    _instance ??= AuthRepository._();
+    return _instance!;
+  }
   AuthRepository._();
 
   static AuthRepository? _instance;
 
-  factory AuthRepository() {
-    if (_instance == null) _instance = AuthRepository._();
-    return _instance!;
-  }
-
 // /Example
-  Future<NetworkState> testApi() async {
-    bool isDisconnect = await WifiService.isDisconnect();
-    if (isDisconnect) return NetworkState.withDisconnect();
+  Future<NetworkState<List<TestModel>>> testApi() async {
+    final bool isDisconnect = await WifiService.isDisconnect();
+    if (isDisconnect) {
+      return NetworkState<List<TestModel>>.withDisconnect();
+    }
     try {
-      String api = AppEndpoint.TEST_API;
+      const String api = AppEndpoint.TEST_API;
       // Map<String, dynamic> params = {
       //   "os": Platform.isAndroid ? "android" : "ios"
       // };
-      Response response = await AppClients().get(api);
-      return NetworkState(
+      final Response<List<Map<String, dynamic>>> response = await AppClients().get(api);
+      return NetworkState<List<TestModel>>(
         status: AppEndpoint.SUCCESS,
-        data: (response.data as List<dynamic>).map((e) => TestModel.fromJson(e)).toList(),
+        data: response.data?.map((Map<String, dynamic> e) => TestModel.fromJson(e)).toList(),
       );
     } on DioError catch (e) {
-      return NetworkState.withError(e);
+      return NetworkState<List<TestModel>>.withError(e);
     }
   }
 }

@@ -12,25 +12,27 @@ Future<void> backgroundMessageHandler(RemoteMessage message) async {
 class FirebaseCloudMessaging {
   static final FirebaseMessaging instance = FirebaseMessaging.instance;
 
-  static initFirebaseMessaging() async {
+  static Future<void> initFirebaseMessaging() async {
     if (Platform.isIOS) {
       await instance.requestPermission();
     }
-    FirebaseMessaging.onMessage.listen((message) {
-      log("OnMessage: ${message.data}");
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log('OnMessage: ${message.data}');
       _handler(message, show: true);
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      log("OnMessageOpenedApp: ${message.data}");
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log('OnMessageOpenedApp: ${message.data}');
       _handler(message, show: true);
     });
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
-    final initMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initMessage != null) _handler(initMessage);
+    final RemoteMessage? initMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initMessage != null) {
+      _handler(initMessage);
+    }
   }
 
-  static _handler(RemoteMessage message, {bool show = false}) {
-    Data payload = Data.fromJson(message.data);
+  static void _handler(RemoteMessage message, {bool show = false}) {
+    final Data payload = Data.fromJson(message.data);
     if (show) {
       LocalNotification.showNotification(message.notification?.title,
           message.notification?.body, payload.toString());
@@ -38,5 +40,9 @@ class FirebaseCloudMessaging {
     } else {
       selectNotificationSubject.add(payload.toString());
     }
+  }
+
+  void a(){
+
   }
 }

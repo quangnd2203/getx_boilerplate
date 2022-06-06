@@ -34,7 +34,7 @@ class AppUtils {
 
   static const List<String> _themes = ['dark', 'light'];
 
-  static dynamic valueByMode({List<String> themes = _themes, required List<dynamic> values}) {
+  static T valueByMode<T>({List<String> themes = _themes, required List<T> values}) {
     try {
       for (int i = 0; i < themes.length; i++) {
         if (AppPrefs.appMode == themes[i]) {

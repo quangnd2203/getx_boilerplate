@@ -4,78 +4,88 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../../constants/app_endpoint.dart';
+import 'model.dart';
+
+typedef NetworkStateConverter<T> = T Function(Map<String, dynamic> json);
 
 class NetworkState<T> {
-  int? status;
-  String? message;
-  T? data;
-
   NetworkState({this.message, this.data, this.status});
 
-  factory NetworkState.fromResponse(Response response, {converter, value, String? prefix}) {
+  factory NetworkState.fromResponse(Response<T> response, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
     try {
-      return NetworkState._fromJson(jsonDecode(jsonEncode(response.data)),
-          converter: converter, prefix: prefix, value: value);
+      final Map<String, dynamic> json = jsonDecode(jsonEncode(response.data)) as Map<String, dynamic>;
+      return NetworkState<T>._fromJson(
+        json,
+        converter: converter,
+        prefix: prefix,
+        value: value,
+      );
     } catch (e) {
-      log("Error NetworkResponse.fromResponse: $e");
-      return NetworkState.withErrorConvert(e);
+      log('Error NetworkResponse.fromResponse: $e');
+      return NetworkState<T>.withErrorConvert();
     }
   }
 
-  NetworkState._fromJson(dynamic json, {converter, value, String? prefix}) {
-    status = json['status'];
-    message = json['message'];
+  NetworkState._fromJson(Map<String, dynamic> json, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
+    status = json['status'] as int?;
+    message = json['message'] as String?;
     if (value != null)
       data = value;
     else if (prefix != null) {
-      if (prefix.trim().isEmpty)
-        data = converter != null && json != null ? converter(json) : json;
-      else
-        data = converter != null && json[prefix] != null ? converter(json[prefix]) : json[prefix];
+      if (prefix.trim().isEmpty){
+        data = converter != null && json != null ? converter(json) : json as T?;
+      } else{
+        data = converter != null && json[prefix] != null ? converter(json[prefix] as Map<String, dynamic>) : json[prefix] as T?;
+      }
     } else {
-      data =
-      converter != null && json["data"] != null ? converter(json["data"]) : json["data"];
+      data = converter != null && json['data'] != null ? converter(json['data'] as Map<String, dynamic>) : json['data'] as T?;
     }
   }
 
   NetworkState.fromJson(Map<String, dynamic> json) {
-    this.message = json['message'];
-    this.status = json['status'];
-    this.data = json['data'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    data['data'] = this.data;
-    return data;
+    message = json['message'] as String?;
+    status = json['status'] as int ?;
+    data = json['data'] as T;
   }
 
   NetworkState.withError(DioError error) {
     String message;
     int? code;
-    Response? response = error.response;
+    final Response<T>? response = error.response as Response<T>?;
     if (response != null) {
       code = response.statusCode;
-      message = response.data["message"];
+      message = (response.data! as Map<String, dynamic>)['message'] as String;
     } else {
       code = AppEndpoint.ERROR_SERVER;
-      message = "Không thể kết nối đến máy chủ!";
+      message = 'Không thể kết nối đến máy chủ!';
     }
     this.message = message;
-    this.status = code;
-    this.data = null;
+    status = code;
+    data = null;
   }
 
   NetworkState.withDisconnect() {
-    this.message = "Mất kết nối internet, vui lòng kiểm tra wifi/3g và thử lại!";
-    this.status = AppEndpoint.ERROR_DISCONNECT;
-    this.data = null;
+    message = 'Mất kết nối internet, vui lòng kiểm tra wifi/3g và thử lại!';
+    status = AppEndpoint.ERROR_DISCONNECT;
+    data = null;
   }
 
-  NetworkState.withErrorConvert(error) {
-    this.data = null;
+  NetworkState.withErrorConvert() {
+    data = null;
+  }
+
+  int? status;
+  String? message;
+  T? data;
+
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
+    data['data'] = this.data;
+    return data;
   }
 
   bool get isSuccess => status == AppEndpoint.SUCCESS;

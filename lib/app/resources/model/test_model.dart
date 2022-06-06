@@ -10,11 +10,11 @@ class TestModel {
       this.title, 
       this.body,});
 
-  TestModel.fromJson(dynamic json) {
-    userId = json['userId'];
-    id = json['id'];
-    title = json['title'];
-    body = json['body'];
+  TestModel.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'] as int?;
+    id = json['id'] as int?;
+    title = json['title'] as String?;
+    body = json['body'] as String?;
   }
   int? userId;
   int? id;
@@ -30,7 +30,7 @@ TestModel copyWith({  int? userId,
   body: body ?? this.body,
 );
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
+    final Map<String, dynamic> map = <String, dynamic>{};
     map['userId'] = userId;
     map['id'] = id;
     map['title'] = title;

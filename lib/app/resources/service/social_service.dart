@@ -84,9 +84,9 @@ class SocialService {
       log("User: $user");
       socialResult.id = accessToken.userId;
       socialResult.accessToken = accessToken.token;
-      socialResult.fullName = user['name'];
-      socialResult.email = user['email'];
-      socialResult.avatar = user['picture']['data']['url'];
+      socialResult.fullName = user['name'] as String?;
+      socialResult.email = user['email'] as String?;
+      socialResult.avatar = user['picture']['data']['url'] as String?;
       socialResult.success = true;
     } catch (error) {
       log('signInFacebook: $error');

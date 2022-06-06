@@ -45,9 +45,10 @@ class AppClients extends DioForNative {
         break;
 
       default:
-        if (options.data is Map) {
+        if (options.data is Map<String, dynamic>) {
+          final Map<String, dynamic> data = options.data as Map<String, dynamic>;
           //Remove if contains
-          if (options.data.containsKey("accessToken")) options.data.remove("accessToken");
+          if (data.containsKey("accessToken")) options.data.remove("accessToken");
           //Add again
           options.data.addAll({"accessToken": accessToken});
           logger.i("${options.method}: ${options.uri}\nParams: ${options.data}");
