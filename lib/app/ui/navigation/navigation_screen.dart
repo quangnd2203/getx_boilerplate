@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/constants/app_text_styles.dart';
-import 'package:get/get.dart';
-
 import '../ui.dart';
 
 class NavigationScreen extends BaseScreen<NavigationController> {
@@ -26,9 +24,9 @@ class NavigationScreen extends BaseScreen<NavigationController> {
         Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: controller.raw.value.length,
+            itemCount: controller.raw.length,
             itemBuilder: (context, index){
-              final item = controller.raw.value[index];
+              final item = controller.raw[index];
               return Container(
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.only(bottom: 16),

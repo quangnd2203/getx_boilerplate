@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../ui.dart';
 
 class BaseController extends GetxController {
   var loading = false.obs;

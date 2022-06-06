@@ -44,7 +44,8 @@ class LoginSocialFirebaseResult {
 
   bool get isSuccess => success;
 
-  LoginSocialFirebaseResult({this.success = false, this.msg, this.token, this.user});
+  LoginSocialFirebaseResult(
+      {this.success = false, this.msg, this.token, this.user});
 }
 
 class SocialService {
@@ -60,7 +61,8 @@ class SocialService {
   // Username: test_jbijwbw_user@tfbnw.net
   // pass: Werewolf@
   Future<LoginSocialResult> signInFacebook() async {
-    LoginSocialResult socialResult = LoginSocialResult(type: SocialType.facebook);
+    LoginSocialResult socialResult =
+        LoginSocialResult(type: SocialType.facebook);
     try {
       await FacebookAuth.instance.logOut();
       final LoginResult result = await FacebookAuth.instance.login(
@@ -75,9 +77,10 @@ class SocialService {
       );
       if (result.status != LoginStatus.success) return socialResult;
       final AccessToken? accessToken = result.accessToken;
-      if (accessToken == null) throw Exception('AccessToken from facebook null!');
-      final Map<String, dynamic> user = await FacebookAuth.instance
-          .getUserData(fields: "name,email,picture.width(200),birthday,friends,gender,link");
+      if (accessToken == null)
+        throw Exception('AccessToken from facebook null!');
+      final Map<String, dynamic> user = await FacebookAuth.instance.getUserData(
+          fields: "name,email,picture.width(200),birthday,friends,gender,link");
       log("User: $user");
       socialResult.id = accessToken.userId;
       socialResult.accessToken = accessToken.token;
@@ -96,9 +99,11 @@ class SocialService {
     try {
       if (await GoogleSignIn().isSignedIn()) await GoogleSignIn().signOut();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) throw Exception('GoogleSignInAccount from google null!');
+      if (googleUser == null)
+        throw Exception('GoogleSignInAccount from google null!');
       if (await GoogleSignIn().isSignedIn()) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
         result.id = googleUser.id;
         result.fullName = googleUser.displayName;
         result.email = googleUser.email;
@@ -126,7 +131,8 @@ class SocialService {
         redirectURI: 'example://',
       );
       final authResult = await twitterLogin.login();
-      if (authResult.status == null) throw Exception('TwitterLogin status null!');
+      if (authResult.status == null)
+        throw Exception('TwitterLogin status null!');
       switch (authResult.status!) {
         case TwitterLoginStatus.loggedIn:
           result.accessToken = authResult.authToken;
@@ -154,7 +160,8 @@ class SocialService {
     result.code = credential.authorizationCode;
     if (credential.identityToken != null) {
       result.accessToken = credential.identityToken;
-      result.fullName = (credential.givenName ?? '') + (credential.familyName ?? '');
+      result.fullName =
+          (credential.givenName ?? '') + (credential.familyName ?? '');
     }
     print(credential);
 
@@ -237,7 +244,8 @@ class SocialServiceFirebase {
     final auth = await result?.authentication;
     if (auth != null) {
       print("${auth.accessToken}");
-      return GoogleAuthProvider.credential(idToken: auth.idToken, accessToken: auth.accessToken);
+      return GoogleAuthProvider.credential(
+          idToken: auth.idToken, accessToken: auth.accessToken);
     }
 
     return null;
@@ -258,7 +266,7 @@ class SocialServiceFirebase {
         print("_loginFacebook failed: ${result.message}");
         return null;
       default:
-        break;
+        return null;
     }
   }
 
@@ -273,19 +281,22 @@ class SocialServiceFirebase {
       AppleIDAuthorizationScopes.fullName,
     ], nonce: nonce);
 
-    if (credential.identityToken == null) return authCredential;
-    authCredential = OAuthProvider("apple.com").credential(
-      idToken: credential.identityToken,
-      rawNonce: rawNonce,
-    );
+    if (credential.identityToken != null)
+      authCredential = OAuthProvider("apple.com").credential(
+        idToken: credential.identityToken,
+        rawNonce: rawNonce,
+      );
+    return authCredential;
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
   /// credential request.
   String generateNonce([int length = 32]) {
-    final charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
     final random = Math.Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+        .join();
   }
 
   /// Returns the sha256 hash of [input] in hex notation.

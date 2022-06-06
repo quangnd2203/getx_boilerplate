@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-
 import '../../constants/constants.dart';
-import '../ui.dart';
 
 class WidgetLoadingFullScreen extends StatelessWidget {
   final Widget child;
