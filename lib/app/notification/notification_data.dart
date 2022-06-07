@@ -1,6 +1,6 @@
+// ignore_for_file: always_specify_types
+
 class FirebaseNotification {
-  Notification? notification;
-  Data? data;
 
   FirebaseNotification(
       this.notification,
@@ -20,10 +20,12 @@ class FirebaseNotification {
               (k, e) => MapEntry(k as String, e),
         )),
       );
+  Notification? notification;
+  Data? data;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'notification': this.notification,
-    'data': this.data,
+    'notification': notification,
+    'data': data,
   };
 
   @override
@@ -33,8 +35,6 @@ class FirebaseNotification {
 }
 
 class Data {
-  String type;
-  String data;
 
   Data(this.type, this.data);
 
@@ -42,19 +42,19 @@ class Data {
     json?['type'] as String,
     json?['data'] as String,
   );
+  String type;
+  String data;
 
   Map<String, dynamic> toJson() =>
-      <String, dynamic>{'type': this.type, 'data': this.data};
+      <String, dynamic>{'type': type, 'data': data};
 
   @override
   String toString() {
-    return '''{"type": "${this.type}","data": "${this.data}"}''';
+    return '''{"type": "$type","data": "$data"}''';
   }
 }
 
 class Notification {
-  String title;
-  String body;
 
   Notification(
       this.title,
@@ -65,10 +65,12 @@ class Notification {
     json?['title'] as String,
     json?['body'] as String,
   );
+  String title;
+  String body;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'title': this.title,
-    'body': this.body,
+    'title': title,
+    'body': body,
   };
 
   @override

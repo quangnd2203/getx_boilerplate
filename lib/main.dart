@@ -1,35 +1,42 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
+
 import 'app/constants/constants.dart';
 import 'app/notification/notification.dart';
 import 'app/routes/app_pages.dart';
 import 'app/translations/app_translations.dart';
-import 'app/utils/utils.dart';
 import 'app/ui/ui.dart';
+import 'app/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   await AppPrefs.initListener();
   await notificationInitialed();
-  runApp(OverlaySupport(child: RestartWidget(child: App())));
+  runApp(const OverlaySupport(child: RestartWidget(child: App())));
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ThemeSwitcherWidget(
-        initialThemeData: normalTheme(context), child: MyApp());
+        initialThemeData: normalTheme(context), child: const MyApp());
   }
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
 
   @override
@@ -52,7 +59,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("ChangeAppLifecycleState: $state");
+    print('ChangeAppLifecycleState: $state');
   }
 
   @override
@@ -62,7 +69,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       initialRoute: Routes.SPLASH,
       defaultTransition: Transition.cupertino,
       getPages: AppPages.pages,
-      locale: Locale('vi', 'VN'),
+      locale: const Locale('vi', 'VN'),
       translationsKeys: AppTranslation.translations,
       navigatorObservers: <NavigatorObserver>[MyApp.observer],
     );

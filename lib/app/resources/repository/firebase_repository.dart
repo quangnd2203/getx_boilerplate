@@ -1,24 +1,25 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_app/app/resources/resources.dart';
-import 'package:flutter_app/app/utils/utils.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import '../../constants/constants.dart';
+// import '../../utils/app_clients.dart';
+// import '../model/model.dart';
+// import '../service/wifi_service.dart';
+// import 'package:dio/dio.dart';
 
-import '../../constants/constants.dart';
 
 class FirebaseRepository {
+
+  factory FirebaseRepository() {
+    _instance ??= FirebaseRepository._();
+    return _instance!;
+  }
   FirebaseRepository._();
 
   static FirebaseRepository? _instance;
 
-  factory FirebaseRepository() {
-    if (_instance == null) _instance = FirebaseRepository._();
-    return _instance!;
-  }
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future verifyPhoneNumber(
+  Future<void> verifyPhoneNumber(
       String phoneNumber,
       PhoneVerificationCompleted verificationCompleted,
       PhoneVerificationFailed verificationFailed,
@@ -26,7 +27,7 @@ class FirebaseRepository {
       PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout) async {
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        timeout: Duration(seconds: 120),
+        timeout: const Duration(seconds: 120),
         verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
         codeSent: codeSent,
@@ -47,19 +48,18 @@ class FirebaseRepository {
 
   Future<void> signOut() => _auth.signOut();
 
-  Future<NetworkState> updateFirebaseToken() async {
-    bool isDisconnect = await WifiService.isDisconnect();
-    if (isDisconnect) return NetworkState.withDisconnect();
-    try {
-      String? token = await FirebaseMessaging.instance.getToken();
-      Response response =
-          await AppClients().post("URL", data: {"fcm_device_token": token});
-      return NetworkState(
-        status: response.statusCode ?? AppEndpoint.SUCCESS,
-        data: response.data,
-      );
-    } on DioError catch (e) {
-      return NetworkState.withError(e);
-    }
-  }
+  // Future<NetworkState> updateFirebaseToken() async {
+  //   bool isDisconnect = await WifiService.isDisconnect();
+  //   if (isDisconnect) return NetworkState.withDisconnect();
+  //   try {
+  //     String? token = await FirebaseMessaging.instance.getToken();
+  //     Response response = await AppClients().post("URL", data: {"fcm_device_token": token});
+  //     return NetworkState(
+  //       status: response.statusCode ?? AppEndpoint.SUCCESS,
+  //       data: response.data,
+  //     );
+  //   } on DioError catch (e) {
+  //     return NetworkState.withError(e);
+  //   }
+  // }
 }

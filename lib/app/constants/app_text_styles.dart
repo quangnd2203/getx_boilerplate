@@ -47,8 +47,4 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   );
 
-// static TextStyle get normalRegular => normal.copyWith(
-//   fontSize: AppFontSize.fontText,
-//   fontWeight: FontWeight.w400,
-// );
 }

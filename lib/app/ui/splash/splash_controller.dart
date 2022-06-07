@@ -5,15 +5,15 @@ import '../ui.dart';
 
 class SplashController extends BaseController {
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
     await getConfig();
     await getProfile();
   }
 
-  Future getConfig() async {}
+  Future<void> getConfig() async {}
 
-  getProfile() async {
+  Future<void> getProfile() async {
     Get.offAllNamed(Routes.NAVIGATION);
   }
 }

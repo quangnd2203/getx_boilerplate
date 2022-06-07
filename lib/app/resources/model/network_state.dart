@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-
 import '../../constants/app_endpoint.dart';
-import 'model.dart';
 
 typedef NetworkStateConverter<T> = T Function(Map<String, dynamic> json);
 

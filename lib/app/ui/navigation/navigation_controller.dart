@@ -12,7 +12,7 @@ class NavigationController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       count.value ++;
       count.refresh();
     });
@@ -20,9 +20,9 @@ class NavigationController extends BaseController {
   }
 
   Future<void> fetchTestApi() async {
-    final _ = await AuthRepository().testApi();
-    if(_.isSuccess){
-      raw.assignAll(_.data!.toList());
+    final NetworkState<List<TestModel>> networkState = await AuthRepository().testApi();
+    if(networkState.isSuccess){
+      raw.assignAll(networkState.data!.toList());
     }
   }
 }

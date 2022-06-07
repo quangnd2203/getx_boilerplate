@@ -2,12 +2,12 @@ part of './app_pages.dart';
 
 abstract class Routes{
 
-  static const SPLASH = '/';
+  static const String SPLASH = '/';
 
-  static const START = '/start';
-  static const SIGN_IN = '/sign_in';
-  static const SIGN_UP = '/sign_up';
+  static const String START = '/start';
+  static const String SIGN_IN = '/sign_in';
+  static const String SIGN_UP = '/sign_up';
 
-  static const NAVIGATION = '/navigation';
-  static const ROOM = '/room';
+  static const String NAVIGATION = '/navigation';
+  static const String ROOM = '/room';
 }

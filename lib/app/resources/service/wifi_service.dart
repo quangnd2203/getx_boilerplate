@@ -5,10 +5,11 @@ import 'package:connectivity/connectivity.dart';
 typedef WifiListener = Function(bool enabled);
 
 class WifiService {
-  StreamSubscription<ConnectivityResult>? _subscription;
 
   WifiService({WifiListener? listener}) {
-    if (_subscription != null) _subscription!.cancel();
+    if (_subscription != null){
+      _subscription!.cancel();
+    }
     _subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -18,18 +19,19 @@ class WifiService {
       }
     });
   }
+  StreamSubscription<ConnectivityResult>? _subscription;
 
   static Future<bool> isConnectivity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    final ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult != ConnectivityResult.none;
   }
 
   static Future<bool> isDisconnect() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    final ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult == ConnectivityResult.none;
   }
 
-  close() {
+  void close() {
     _subscription?.cancel();
   }
 }

@@ -1,17 +1,29 @@
+// ignore_for_file: library_prefixes, avoid_dynamic_calls, avoid_print, no_default_cases
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as Math;
-
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:twitter_login/entity/auth_result.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 enum SocialType { facebook, google, twitter, apple }
 
 class LoginSocialResult {
+  LoginSocialResult(
+      {this.accessToken,
+      this.code,
+      this.secretToken,
+      this.success = false,
+      this.email,
+      required this.type,
+      this.id,
+      this.avatar,
+      this.fullName});
   bool success;
   dynamic id;
   String? code;
@@ -23,50 +35,37 @@ class LoginSocialResult {
   String? avatar;
 
   bool get isSuccess => success;
-
-  LoginSocialResult(
-      {this.accessToken,
-      this.code,
-      this.secretToken,
-      this.success = false,
-      this.email,
-      required this.type,
-      this.id,
-      this.avatar,
-      this.fullName});
 }
 
 class LoginSocialFirebaseResult {
+  LoginSocialFirebaseResult(
+      {this.success = false, this.msg, this.token, this.user});
   bool success;
   User? user;
   String? token;
   String? msg;
 
   bool get isSuccess => success;
-
-  LoginSocialFirebaseResult(
-      {this.success = false, this.msg, this.token, this.user});
 }
 
 class SocialService {
+  factory SocialService() {
+    _instance ??= SocialService._();
+    return _instance!;
+  }
   SocialService._();
 
   static SocialService? _instance;
 
-  factory SocialService() {
-    if (_instance == null) _instance = SocialService._();
-    return _instance!;
-  }
-
   // Username: test_jbijwbw_user@tfbnw.net
   // pass: Werewolf@
   Future<LoginSocialResult> signInFacebook() async {
-    LoginSocialResult socialResult =
+    final LoginSocialResult socialResult =
         LoginSocialResult(type: SocialType.facebook);
     try {
       await FacebookAuth.instance.logOut();
       final LoginResult result = await FacebookAuth.instance.login(
-        permissions: [
+        permissions: <String>[
           'email',
           'public_profile',
           'user_birthday',
@@ -75,13 +74,15 @@ class SocialService {
           'user_link'
         ],
       );
-      if (result.status != LoginStatus.success) return socialResult;
+      if (result.status != LoginStatus.success) {
+        return socialResult;
+      }
       final AccessToken? accessToken = result.accessToken;
       if (accessToken == null)
         throw Exception('AccessToken from facebook null!');
       final Map<String, dynamic> user = await FacebookAuth.instance.getUserData(
-          fields: "name,email,picture.width(200),birthday,friends,gender,link");
-      log("User: $user");
+          fields: 'name,email,picture.width(200),birthday,friends,gender,link');
+      log('User: $user');
       socialResult.id = accessToken.userId;
       socialResult.accessToken = accessToken.token;
       socialResult.fullName = user['name'] as String?;
@@ -95,9 +96,11 @@ class SocialService {
   }
 
   Future<LoginSocialResult> signInGoogle() async {
-    LoginSocialResult result = LoginSocialResult(type: SocialType.google);
+    final LoginSocialResult result = LoginSocialResult(type: SocialType.google);
     try {
-      if (await GoogleSignIn().isSignedIn()) await GoogleSignIn().signOut();
+      if (await GoogleSignIn().isSignedIn()) {
+        await GoogleSignIn().signOut();
+      }
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null)
         throw Exception('GoogleSignInAccount from google null!');
@@ -118,9 +121,10 @@ class SocialService {
   }
 
   Future<LoginSocialResult> signInTwitter() async {
-    LoginSocialResult result = LoginSocialResult(type: SocialType.twitter);
+    final LoginSocialResult result =
+        LoginSocialResult(type: SocialType.twitter);
     try {
-      final twitterLogin = TwitterLogin(
+      final TwitterLogin twitterLogin = TwitterLogin(
         // Consumer API keys
         apiKey: 'xxxx',
         // Consumer API Secret keys
@@ -130,7 +134,7 @@ class SocialService {
         // iOS is a URLScheme
         redirectURI: 'example://',
       );
-      final authResult = await twitterLogin.login();
+      final AuthResult authResult = await twitterLogin.login();
       if (authResult.status == null)
         throw Exception('TwitterLogin status null!');
       switch (authResult.status!) {
@@ -142,21 +146,24 @@ class SocialService {
         case TwitterLoginStatus.cancelledByUser:
           break;
         case TwitterLoginStatus.error:
-          print("SignIn Twitter Error: ${authResult.errorMessage}");
+          print('SignIn Twitter Error: ${authResult.errorMessage}');
           break;
       }
     } catch (error) {
-      log("SignIn Twitter Error: $error");
+      log('SignIn Twitter Error: $error');
     }
     return result;
   }
 
   static Future<LoginSocialResult> signInWithApple() async {
-    LoginSocialResult result = LoginSocialResult(type: SocialType.apple);
-    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
-      AppleIDAuthorizationScopes.email,
-      AppleIDAuthorizationScopes.fullName,
-    ]);
+    final LoginSocialResult result = LoginSocialResult(type: SocialType.apple);
+    final AuthorizationCredentialAppleID credential =
+        await SignInWithApple.getAppleIDCredential(
+      scopes: <AppleIDAuthorizationScopes>[
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
     result.code = credential.authorizationCode;
     if (credential.identityToken != null) {
       result.accessToken = credential.identityToken;
@@ -192,19 +199,18 @@ class SocialService {
 }
 
 class SocialServiceFirebase {
+  factory SocialServiceFirebase() {
+    _instance ??= SocialServiceFirebase._();
+    return _instance!;
+  }
   SocialServiceFirebase._();
 
   static SocialServiceFirebase? _instance;
 
-  factory SocialServiceFirebase() {
-    if (_instance == null) _instance = SocialServiceFirebase._();
-    return _instance!;
-  }
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<LoginSocialFirebaseResult> signIn(SocialType type) async {
-    LoginSocialFirebaseResult result = LoginSocialFirebaseResult();
+    final LoginSocialFirebaseResult result = LoginSocialFirebaseResult();
     UserCredential? userCredential;
     AuthCredential? authCredential;
     switch (type) {
@@ -236,14 +242,16 @@ class SocialServiceFirebase {
   }
 
   Future<AuthCredential?> _loginGoogle() async {
-    final googleLogin = GoogleSignIn(scopes: ["email"]);
+    final GoogleSignIn googleLogin = GoogleSignIn(scopes: <String>['email']);
 
-    if (await googleLogin.isSignedIn()) await googleLogin.signOut();
+    if (await googleLogin.isSignedIn()) {
+      await googleLogin.signOut();
+    }
 
-    GoogleSignInAccount? result = await googleLogin.signIn();
-    final auth = await result?.authentication;
+    final GoogleSignInAccount? result = await googleLogin.signIn();
+    final GoogleSignInAuthentication? auth = await result?.authentication;
     if (auth != null) {
-      print("${auth.accessToken}");
+      print('${auth.accessToken}');
       return GoogleAuthProvider.credential(
           idToken: auth.idToken, accessToken: auth.accessToken);
     }
@@ -256,14 +264,14 @@ class SocialServiceFirebase {
     final LoginResult result = await FacebookAuth.instance.login();
     switch (result.status) {
       case LoginStatus.success:
-        print("_loginFacebook ok");
-        print("${result.accessToken!.token}");
+        print('_loginFacebook ok');
+        print(result.accessToken!.token);
         return FacebookAuthProvider.credential(result.accessToken!.token);
       case LoginStatus.cancelled:
-        print("_loginFacebook cancel");
+        print('_loginFacebook cancel');
         return null;
       case LoginStatus.failed:
-        print("_loginFacebook failed: ${result.message}");
+        print('_loginFacebook failed: ${result.message}');
         return null;
       default:
         return null;
@@ -273,16 +281,19 @@ class SocialServiceFirebase {
   Future<AuthCredential?> _loginApple() async {
     AuthCredential? authCredential;
 
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
+    final String rawNonce = generateNonce();
+    final String nonce = sha256ofString(rawNonce);
 
-    final credential = await SignInWithApple.getAppleIDCredential(scopes: [
-      AppleIDAuthorizationScopes.email,
-      AppleIDAuthorizationScopes.fullName,
-    ], nonce: nonce);
+    final AuthorizationCredentialAppleID credential =
+        await SignInWithApple.getAppleIDCredential(
+            scopes: <AppleIDAuthorizationScopes>[
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+            nonce: nonce);
 
     if (credential.identityToken != null)
-      authCredential = OAuthProvider("apple.com").credential(
+      authCredential = OAuthProvider('apple.com').credential(
         idToken: credential.identityToken,
         rawNonce: rawNonce,
       );
@@ -292,17 +303,17 @@ class SocialServiceFirebase {
   /// Generates a cryptographically secure random nonce, to be included in a
   /// credential request.
   String generateNonce([int length = 32]) {
-    final charset =
+    const String charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-    final random = Math.Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-        .join();
+    final Math.Random random = Math.Random.secure();
+    return List<String>.generate(
+        length, (_) => charset[random.nextInt(charset.length)]).join();
   }
 
   /// Returns the sha256 hash of [input] in hex notation.
   String sha256ofString(String input) {
-    final bytes = utf8.encode(input);
-    final digest = sha256.convert(bytes);
+    final List<int> bytes = utf8.encode(input);
+    final Digest digest = sha256.convert(bytes);
     return digest.toString();
   }
 }

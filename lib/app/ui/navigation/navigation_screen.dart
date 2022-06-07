@@ -1,5 +1,8 @@
+// ignore_for_file: use_key_in_widget_constructors, flutter_style_todos
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/constants/app_text_styles.dart';
+import '../../constants/constants.dart';
+import '../../resources/model/test_model.dart';
 import '../ui.dart';
 
 class NavigationScreen extends BaseScreen<NavigationController> {
@@ -14,9 +17,9 @@ class NavigationScreen extends BaseScreen<NavigationController> {
 
   Widget _buildBody() {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
-          padding: EdgeInsets.all(16).copyWith(top: 116),
+          padding: const EdgeInsets.all(16).copyWith(top: 116),
           child: Center(
             child: Text(controller.count.value.toString()),
           ),
@@ -25,8 +28,8 @@ class NavigationScreen extends BaseScreen<NavigationController> {
           child: ListView.builder(
             padding: const EdgeInsets.all(16),
             itemCount: controller.raw.length,
-            itemBuilder: (context, index){
-              final item = controller.raw[index];
+            itemBuilder: (BuildContext context, int index){
+              final TestModel item = controller.raw[index];
               return Container(
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.only(bottom: 16),
@@ -36,7 +39,7 @@ class NavigationScreen extends BaseScreen<NavigationController> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(item.id!.toString(), style: AppTextStyles.normalBold,),
                     const SizedBox(height: 16,),
                     Text(item.title!, style: AppTextStyles.normalBold,),

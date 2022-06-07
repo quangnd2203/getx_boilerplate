@@ -1,22 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-import 'package:get/get.dart';
+// ignore_for_file: flutter_style_todos
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../ui.dart';
 
-abstract class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
+class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
+  BaseScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return GetX<T>(
-      dispose: (state) {
-        Logger().d('DISPOSE: "${this.runtimeType}" - "$T"');
+      dispose: (GetXState<T> state) {
+        Logger().d('DISPOSE: "$runtimeType" - "$T"');
         Get.delete<T>();
       },
-      builder: (controller) {
+      builder: (BaseController controller) {
         return WidgetLoadingFullScreen(
-          child: builder()!,
           loading: controller.loading.value,
+          child: builder()!,
         );
       },
     );
@@ -35,22 +38,22 @@ abstract class BaseScreen<T extends BaseController> extends GetResponsiveView<T>
 
   @override
   Widget desktop() {
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
   Widget phone() {
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
   Widget tablet() {
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
   Widget watch() {
-    return SizedBox();
+    return const SizedBox();
   }
 
 }

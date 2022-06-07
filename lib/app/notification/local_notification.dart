@@ -36,16 +36,16 @@ class LocalNotification {
   }
 
   static Future<void> showNotification(String? title, String? body, String? payload) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(_id, _channel,
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(_id, _channel,
         channelDescription: _description,
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
+    const IOSNotificationDetails iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, '${title ?? 'Say hi!'} ',
-        '${body ?? 'Nice to meet you again!'}', platformChannelSpecifics,
+        body ?? 'Nice to meet you again!', platformChannelSpecifics,
         payload: payload);
   }
 }

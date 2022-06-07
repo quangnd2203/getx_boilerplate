@@ -1,10 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class ThemeSwitcher extends InheritedWidget {
-  final _ThemeSwitcherWidgetState data;
 
   const ThemeSwitcher({Key? key, required this.data, required Widget child})
       : super(child: child, key: key);
+  final _ThemeSwitcherWidgetState data;
 
   static _ThemeSwitcherWidgetState of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ThemeSwitcher>()!.data;
@@ -17,12 +19,12 @@ class ThemeSwitcher extends InheritedWidget {
 }
 
 class ThemeSwitcherWidget extends StatefulWidget {
-  final Widget child;
-  final ThemeData initialThemeData;
 
   const ThemeSwitcherWidget(
       {Key? key, required this.child, required this.initialThemeData})
       : super(key: key);
+  final Widget child;
+  final ThemeData initialThemeData;
 
   @override
   _ThemeSwitcherWidgetState createState() => _ThemeSwitcherWidgetState();
@@ -33,7 +35,9 @@ class _ThemeSwitcherWidgetState extends State<ThemeSwitcherWidget> {
 
   void switchMode({ThemeData? themeData}) {
     setState(() {
-      if (themeData != null) this.themeData = themeData;
+      if (themeData != null){
+        this.themeData = themeData;
+      }
     });
   }
 

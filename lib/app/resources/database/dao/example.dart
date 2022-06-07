@@ -24,9 +24,7 @@
 //   ///   queryBuilder: điều kiện đầu vào (có thể có hoặc không).
 //   @override
 //   Future<List<StudentModel>> read({DataQueryBuilder? queryBuilder}) async {
-//     // TODO: implement find
 //     List<StudentModel> result = [];
-//     // TODO: implement find
 //     final response = await appDatabase.read(tableName, queryBuilder: queryBuilder);
 //     if(response != null){
 //       result = response.map((e) => StudentModel.fromJson(e)).toList();

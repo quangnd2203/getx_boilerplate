@@ -1,3 +1,5 @@
+// ignore_for_file: always_specify_types, strict_raw_type
+
 import 'package:get_storage/get_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -8,8 +10,8 @@ class AppPrefs {
 
   static final BehaviorSubject _userBehavior = BehaviorSubject<dynamic>();
 
-  static initListener() async {
-    await GetStorage.init("AppPref");
+  static Future<void> initListener() async {
+    await GetStorage.init('AppPref');
     _box.listenKey('user', (user) {
       _userBehavior.add(user);
     });
