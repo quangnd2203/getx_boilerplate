@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import '../../constants/constants.dart';
 import '../../utils/app_clients.dart';
 import '../resources.dart';
@@ -24,10 +25,10 @@ class AuthRepository {
       // Map<String, dynamic> params = {
       //   "os": Platform.isAndroid ? "android" : "ios"
       // };
-      final Response<List<Map<String, dynamic>>> response = await AppClients().get(api);
+      final Response<List<dynamic>> response = await AppClients().get(api);
       return NetworkState<List<TestModel>>(
         status: AppEndpoint.SUCCESS,
-        data: response.data?.map((Map<String, dynamic> e) => TestModel.fromJson(e)).toList(),
+        data: response.data?.map((dynamic e) => TestModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
     } on DioError catch (e) {
       return NetworkState<List<TestModel>>.withError(e);

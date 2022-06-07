@@ -75,8 +75,6 @@ class NetworkState<T> {
   String? message;
   T? data;
 
-
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;

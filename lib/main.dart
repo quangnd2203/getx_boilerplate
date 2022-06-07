@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 import 'app/constants/constants.dart';
@@ -15,6 +16,7 @@ import 'app/ui/ui.dart';
 import 'app/utils/utils.dart';
 
 void main() async {
+  Logger().w('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);

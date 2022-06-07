@@ -23,6 +23,7 @@ class NavigationController extends BaseController {
     final NetworkState<List<TestModel>> networkState = await AuthRepository().testApi();
     if(networkState.isSuccess){
       raw.assignAll(networkState.data!.toList());
+      raw.refresh();
     }
   }
 }

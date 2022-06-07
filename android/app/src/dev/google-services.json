@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "75084270969",
+    "project_id": "mvvm-flutter-f2421",
+    "storage_bucket": "mvvm-flutter-f2421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75084270969:android:eb66a8bd7475eac4efb3a8",
+        "android_client_info": {
+          "package_name": "com.ntamobile.getx_pattern.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75084270969-uirpckiulh07jpjrt9a8fja7bp57nq2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ntamobile.getx_pattern.dev",
+            "certificate_hash": "8f59f66f2d95e412ddd162127dcf03c323572ba4"
+          }
+        },
+        {
+          "client_id": "75084270969-o1sbshja5upcdak3nmbk4ded2940aarr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC52wnjehzIf_VlbVWDV705GMS9WLze9DE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75084270969-o1sbshja5upcdak3nmbk4ded2940aarr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
