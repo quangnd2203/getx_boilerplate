@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
 import '../../constants/constants.dart';
 import '../../utils/app_clients.dart';
 import '../resources.dart';

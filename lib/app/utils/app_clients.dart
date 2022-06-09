@@ -7,22 +7,23 @@ import 'utils.dart';
 
 class AppClients extends DioForNative {
 
-  factory AppClients({String baseUrl = AppEndpoint.BASE_URL, BaseOptions? options}) {
-    _instance ??= AppClients._(baseUrl: baseUrl);
+  factory AppClients({BaseOptions? options}) {
+    _instance ??= AppClients._(baseUrl: AppEnvironment.getBaseUrlByEnvironment());
     if (options != null){
       _instance!.options = options;
     }
-    _instance!.options.baseUrl = baseUrl;
+    _instance!.options.baseUrl = AppEnvironment.getBaseUrlByEnvironment();
     return _instance!;
   }
 
-  AppClients._({String baseUrl = AppEndpoint.BASE_URL, BaseOptions? options}) : super(options) {
+  AppClients._({required String baseUrl, BaseOptions? options}) : super(options) {
     interceptors.add(InterceptorsWrapper(
           onRequest: _requestInterceptor,
           onResponse: _responseInterceptor,
           onError: _errorInterceptor,
         ));
     this.options.baseUrl = baseUrl;
+    this.options.headers = AppEnvironment.getBaseHeader();
   }
   static const String GET = 'GET';
   static const String POST = 'POST';
