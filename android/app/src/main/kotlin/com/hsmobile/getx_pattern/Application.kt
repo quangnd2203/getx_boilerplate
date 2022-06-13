@@ -1,4 +1,4 @@
-package com.ntamobile.getx_pattern
+package com.ntamobile.getxpattern
 
 import io.flutter.app.FlutterApplication
 //Enable this line if use zalo login

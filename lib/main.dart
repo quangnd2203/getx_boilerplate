@@ -2,6 +2,7 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,8 @@ import 'app/ui/ui.dart';
 import 'app/utils/utils.dart';
 
 void main() async {
-  Logger().w('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
   WidgetsFlutterBinding.ensureInitialized();
+  Logger().w('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
