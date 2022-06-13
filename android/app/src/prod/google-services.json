@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "401222109559",
-    "project_id": "getx-pattern-c779b",
-    "storage_bucket": "getx-pattern-c779b.appspot.com"
+    "project_number": "722408477068",
+    "project_id": "getxpattern-892e7",
+    "storage_bucket": "getxpattern-892e7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:401222109559:android:40e69934fcdab614837972",
+        "mobilesdk_app_id": "1:722408477068:android:e2cb766c704f6e1ab706a9",
         "android_client_info": {
           "package_name": "com.ntamobile.getxpattern"
         }
       },
       "oauth_client": [
         {
-          "client_id": "401222109559-d4600fuj9bup31afuqum11po30c5iq32.apps.googleusercontent.com",
+          "client_id": "722408477068-1mjk1pf3619mk5k5o6shvqfqrteakkik.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ntamobile.getxpattern",
@@ -22,27 +22,27 @@
           }
         },
         {
-          "client_id": "401222109559-sgsusgkrhe78oggd7ae24iuq3jtvg12p.apps.googleusercontent.com",
+          "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7-GG6vmmUauSpsWyXw1da_HEyyRdPoug"
+          "current_key": "AIzaSyC_1shD63wV7A1xgUeHm126StnnlxVcO-c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "401222109559-sgsusgkrhe78oggd7ae24iuq3jtvg12p.apps.googleusercontent.com",
+              "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "401222109559-3ajfauv3l5phbpc0g7ntqce5f4u96bpp.apps.googleusercontent.com",
+              "client_id": "722408477068-k64js2f2h643gjii0li4ub5pvj2rjag6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ntamobile.getxpattern"
+                "bundle_id": "com.ntamobile.getxpattern.dev"
               }
             }
           ]

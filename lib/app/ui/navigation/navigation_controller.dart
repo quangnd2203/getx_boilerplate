@@ -17,6 +17,7 @@ class NavigationController extends BaseController {
       count.refresh();
     });
     await fetchTestApi();
+    await authenticator();
   }
 
   Future<void> fetchTestApi() async {
@@ -25,5 +26,10 @@ class NavigationController extends BaseController {
       raw.assignAll(networkState.data!.toList());
       raw.refresh();
     }
+  }
+
+  Future<void> authenticator() async {
+    final LoginSocialResult loginSocialResult = await SocialService().signInFacebook();
+    print(loginSocialResult.fullName);
   }
 }

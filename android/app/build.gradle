@@ -60,7 +60,6 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ntamobile.getxpattern"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()

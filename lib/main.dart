@@ -2,7 +2,7 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 import 'app/constants/constants.dart';
+import 'app/notification/firebase_messaging.dart';
 import 'app/notification/notification.dart';
 import 'app/routes/app_pages.dart';
 import 'app/translations/app_translations.dart';
@@ -18,12 +19,13 @@ import 'app/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Logger().w('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   await AppPrefs.initListener();
   await notificationInitialed();
+  Logger().d('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
+  print('FCM TOKEN: ${await FirebaseCloudMessaging.getFCMToken()}');
   runApp(const OverlaySupport(child: RestartWidget(child: App())));
 }
 

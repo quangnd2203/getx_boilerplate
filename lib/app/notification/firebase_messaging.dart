@@ -16,6 +16,11 @@ class FirebaseCloudMessaging {
 
   static final FirebaseMessaging instance = FirebaseMessaging.instance;
 
+  static Future<String?> getFCMToken() async{
+    final String? resultFCMToken = await FirebaseMessaging.instance.getToken();
+    return resultFCMToken;
+  }
+
   static Future<void> initFirebaseMessaging() async {
     if (Platform.isIOS) {
       await instance.requestPermission();
@@ -31,7 +36,7 @@ class FirebaseCloudMessaging {
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
     final RemoteMessage? initMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initMessage != null) {
-      _handler(initMessage);
+      _handler(initMessage, show: true);
     }
   }
 

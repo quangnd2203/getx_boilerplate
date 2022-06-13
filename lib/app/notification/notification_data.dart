@@ -39,11 +39,11 @@ class Data {
   Data(this.type, this.data);
 
   factory Data.fromJson(Map<String, dynamic>? json) => Data(
-    json?['type'] as String,
-    json?['data'] as String,
+    json?['type'] as String?,
+    json?['data'] as String?,
   );
-  String type;
-  String data;
+  String? type;
+  String? data;
 
   Map<String, dynamic> toJson() =>
       <String, dynamic>{'type': type, 'data': data};
