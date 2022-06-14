@@ -52,8 +52,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
-    <!-- Google Sign-in Section -->
+
+    <!-- For Google Auth -->
     <key>CFBundleURLTypes</key>
     <array>
     	<dict>
@@ -65,6 +65,28 @@
     			<string>com.googleusercontent.apps.722408477068-ohhpu6r6mlul1uj2h8u0m9k8atqokeol</string>
     		</array>
     	</dict>
+        <!-- For Facebook Auth -->
+    	<dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+              <string>fb$(APP_FACEBOOK_ID)</string>
+            </array>
+          </dict>
+    </array>
+    
+    <!-- For Google Auth -->
+    <key>FacebookAppID</key>
+    <string>$(APP_FACEBOOK_ID)</string>
+    <key>FacebookClientToken</key>
+    <string>CLIENT-TOKEN</string>
+    <key>FacebookDisplayName</key>
+    <string>{your-app-name}</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
     </array>
 </dict>
 </plist>
