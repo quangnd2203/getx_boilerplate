@@ -8,7 +8,8 @@ import 'notification_data.dart';
 //This method will be call in background where have a new message
 Future<void> backgroundMessageHandler(RemoteMessage message) async {
   //Do not thing...
-  // return FirebaseCloudMessaging._handler(message);
+  log('OnBackgroundMessage: $message');
+  return FirebaseCloudMessaging._handler(message);
 }
 
 class FirebaseCloudMessaging {
@@ -36,7 +37,7 @@ class FirebaseCloudMessaging {
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
     final RemoteMessage? initMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initMessage != null) {
-      _handler(initMessage, show: true);
+      _handler(initMessage);
     }
   }
 
