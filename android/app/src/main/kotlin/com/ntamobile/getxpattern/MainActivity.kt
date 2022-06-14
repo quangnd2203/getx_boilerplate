@@ -1,7 +1,7 @@
-package com.ntamobile.getx_pattern
+package com.ntamobile.getxpattern
 
 import io.flutter.embedding.android.FlutterActivity
-import android.content.Intent
+
 //Enable this line if use zalo login
 //import com.zing.zalo.zalosdk.oauth.ZaloSDK
 
