@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../constants/constants.dart';
 
 class WidgetLoadingFullScreen extends StatelessWidget {
 
@@ -40,11 +38,8 @@ class _LoadingWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
-      child: Center(
-        child: SpinKitCircle(
-          color: colorLoading ?? AppColors.primary,
-          size: 55,
-        ),
+      child: const Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
