@@ -2,7 +2,7 @@
 // ignore_for_file: strict_raw_type, avoid_print, always_specify_types
 import 'dart:async';
 import 'dart:convert';
-import 'package:rxdart/rxdart.dart';
+import 'package:get/get.dart';
 import 'firebase_messaging.dart';
 import 'local_notification.dart';
 import 'notification_data.dart';
@@ -12,9 +12,8 @@ Future<void> notificationInitialed() async {
   LocalNotification.setup();
 }
 
-final BehaviorSubject<String?> selectNotificationSubject =
-BehaviorSubject<String?>();
-final BehaviorSubject<bool> notificationSubject = BehaviorSubject<bool>();
+final GetStream<String?> selectNotificationSubject = GetStream<String?>();
+final GetStream<bool> notificationSubject = GetStream<bool>();
 
 StreamSubscription? _subscription;
 
