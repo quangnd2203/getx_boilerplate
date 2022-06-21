@@ -78,7 +78,7 @@
     <key>FacebookAppID</key>
     <string>$(APP_FACEBOOK_ID)</string>
     <key>FacebookClientToken</key>
-    <string>CLIENT-TOKEN</string>
+    <string>$(CLIENT_TOKEN)</string>
     <key>FacebookDisplayName</key>
     <string>{your-app-name}</string>
     <key>LSApplicationQueriesSchemes</key>
