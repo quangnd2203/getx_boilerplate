@@ -68,14 +68,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: Routes.SPLASH,
-      defaultTransition: Transition.cupertino,
-      getPages: AppPages.pages,
-      locale: const Locale('vi', 'VN'),
-      translationsKeys: AppTranslation.translations,
-      navigatorObservers: <NavigatorObserver>[MyApp.observer],
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (OverscrollIndicatorNotification overscroll) {
+        overscroll.disallowGlow();
+        return true;
+      },
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: Routes.SPLASH,
+        defaultTransition: Transition.cupertino,
+        getPages: AppPages.pages,
+        locale: const Locale('vi', 'VN'),
+        translationsKeys: AppTranslation.translations,
+        navigatorObservers: <NavigatorObserver>[MyApp.observer],
+      ),
     );
   }
 }
