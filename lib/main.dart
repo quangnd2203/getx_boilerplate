@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         initialRoute: Routes.SPLASH,
         defaultTransition: Transition.cupertino,
         getPages: AppPages.pages,
-        locale: const Locale('vi', 'VN'),
+        locale: AppLocale.ja.value,
         translationsKeys: AppTranslation.translations,
         navigatorObservers: <NavigatorObserver>[MyApp.observer],
       ),
