@@ -37,7 +37,7 @@ class AppDeviceInfo {
         device = DeviceInfo(
           name: info.model,
           version: info.version.codename,
-          id: info.androidId,
+          id: info.id,
         );
       } else if (Platform.isIOS) {
         final IosDeviceInfo info = await _deviceInfoPlugin.iosInfo;

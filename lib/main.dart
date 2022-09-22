@@ -24,7 +24,7 @@ void main() async {
   await AppPrefs.initListener();
   await notificationInitialed();
   Logger().d('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
-  print('FCM TOKEN: ${await FirebaseCloudMessaging.getFCMToken()}');
+  Logger().d('FCM TOKEN: ${await FirebaseCloudMessaging.getFCMToken()}');
   runApp(const OverlaySupport(child: RestartWidget(child: App())));
 }
 
@@ -73,7 +73,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         return true;
       },
       child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: FLAVOR == 'dev',
+        title: APP_NAME,
         initialRoute: Routes.SPLASH,
         defaultTransition: Transition.cupertino,
         getPages: AppPages.pages,

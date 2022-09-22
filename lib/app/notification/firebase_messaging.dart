@@ -32,7 +32,7 @@ class FirebaseCloudMessaging {
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log('OnMessageOpenedApp: ${message.data}');
-      _handler(message, show: true);
+      _handler(message);
     });
     FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
     final RemoteMessage? initMessage = await FirebaseMessaging.instance.getInitialMessage();

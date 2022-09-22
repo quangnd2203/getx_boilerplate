@@ -8,7 +8,7 @@ part './app_routes.dart';
 class AppPages {
   AppPages._();
   static final List<GetPage> pages = <GetPage>[
-    GetPage(name: Routes.SPLASH, page:()=> SplashScreen(), binding: SplashBinding()),
-    GetPage(name: Routes.NAVIGATION, page:()=> NavigationScreen(), binding: NavigationBinding()),
+    GetPage(name: Routes.SPLASH, page:() => SplashScreen(), binding: SplashBinding()),
+    GetPage(name: Routes.NAVIGATION, page:() => NavigationScreen(), binding: NavigationBinding()),
   ];
 }

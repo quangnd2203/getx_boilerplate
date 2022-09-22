@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class BaseController extends GetxController {
+
+  BuildContext context = Get.context!;
+
   RxBool loading = false.obs;
 
   void setLoading(bool status) {

@@ -11,34 +11,39 @@ dependencies:
     sdk: flutter
 
   # Notification
-  flutter_local_notifications: ^9.6.0
-  firebase_messaging: ^11.4.1
+  flutter_local_notifications: ^11.0.0
+  firebase_messaging: ^13.0.2
 
   # Firebase
-  firebase_analytics: ^9.1.9
-  firebase_core: ^1.17.1
-  cloud_firestore: ^3.1.17
-  firebase_storage: ^10.2.17
-  firebase_auth: ^3.3.19
+  firebase_analytics: ^9.3.5
+  firebase_core: ^1.22.0
+  cloud_firestore: ^3.4.8
+  firebase_storage: ^10.3.8
+  firebase_auth: ^3.9.0
 
   #SignIn social
-  flutter_facebook_auth: ^4.3.4+2
-  google_sign_in: ^5.3.3
-  sign_in_with_apple: ^4.0.0
+  flutter_facebook_auth: ^4.4.1+1
+  google_sign_in: ^5.4.1
+  sign_in_with_apple: ^4.1.0
   twitter_login: ^4.2.3
 
   #Network
   dio: ^4.0.6
-  connectivity_plus: ^2.3.4
+  connectivity_plus: ^2.3.7
   logger: ^1.1.0
 
-  crypto: ^3.0.2
+  #Boilerplate
   get: ^4.6.5
-  flutter_svg: ^1.1.0
-  path_provider: ^2.0.11
-  device_info_plus: ^3.2.4
-  overlay_support: ^2.0.1
   get_storage: ^2.0.3
+  rxdart: ^0.27.5
+
+  #Other
+  crypto: ^3.0.2
+  flutter_svg: ^1.1.5
+  path_provider: ^2.0.11
+  device_info_plus: ^4.1.2
+  overlay_support: ^2.0.1
+
 
   #DataBase
 #  backendless_sdk: ^7.2.3
