@@ -15,6 +15,6 @@ class SplashController extends BaseController {
   Future<void> getConfig() async {}
 
   Future<void> getProfile() async {
-    Get.offAllNamed(Routes.NAVIGATION);
+    // Get.offAllNamed(Routes.NAVIGATION);
   }
 }
