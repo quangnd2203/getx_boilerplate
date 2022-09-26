@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-class WidgetLoadingFullScreen extends StatelessWidget {
+class LoadingFullScreen extends StatelessWidget {
 
-  const WidgetLoadingFullScreen(
-      {Key? key,
+  const LoadingFullScreen(
+      {super.key,
       required this.child,
       this.colorBackground,
       this.colorLoading,
-      this.loading = false})
-      : super(key: key);
+      this.loading = false});
   final Widget child;
   final bool loading;
   final Color? colorBackground;

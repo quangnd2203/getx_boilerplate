@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import '../../constants/app_images.dart';
 
-class WidgetImageNetwork extends StatelessWidget {
-  const WidgetImageNetwork({
-    Key? key,
+class ImageNetwork extends StatelessWidget {
+  const ImageNetwork({
+    super.key,
     required this.url,
     this.width = 720,
     this.height = 720,
     this.borderRadius = 0,
     this.fit = BoxFit.fitWidth,
-  }) : super(key: key);
+  });
   final String url;
   final double? width;
   final double? height;

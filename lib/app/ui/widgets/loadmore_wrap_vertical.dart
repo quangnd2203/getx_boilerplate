@@ -8,8 +8,8 @@ typedef InitRequesterWrap<T> = Future<List<T>> Function();
 typedef ItemBuilderWrap<T> = Widget Function(
     List<T> data, BuildContext context, int index);
 
-class WidgetLoadMoreWrapVertical<T> extends StatefulWidget {
-  const WidgetLoadMoreWrapVertical.build(
+class LoadMoreWrapVertical<T> extends StatefulWidget {
+  const LoadMoreWrapVertical.build(
       {Key? key,
       required this.itemBuilder,
       required this.dataRequester,
@@ -31,12 +31,12 @@ class WidgetLoadMoreWrapVertical<T> extends StatefulWidget {
   final Widget? widgetError;
 
   @override
-  State createState() => WidgetLoadMoreWrapVerticalState<T>();
+  State createState() => LoadMoreWrapVerticalState<T>();
 }
 
 // ignore: always_specify_types
-class WidgetLoadMoreWrapVerticalState<T>
-    extends State<WidgetLoadMoreWrapVertical<T>> {
+class LoadMoreWrapVerticalState<T>
+    extends State<LoadMoreWrapVertical<T>> {
   bool isPerformingRequest = false;
   final ScrollController _controller = ScrollController();
   List<T>? _dataList;
@@ -88,7 +88,7 @@ class WidgetLoadMoreWrapVerticalState<T>
                     ListView(
                       shrinkWrap: true,
                     ),
-                    widget.widgetError ?? const WidgetEmpty(),
+                    widget.widgetError ?? const LoadMoreEmpty(),
                   ],
                 ),
               ));

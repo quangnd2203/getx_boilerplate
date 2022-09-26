@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 import '../../constants/constants.dart';
 
-class WidgetEmpty extends StatelessWidget {
+class LoadMoreEmpty extends StatelessWidget {
 
-  const WidgetEmpty({Key? key, this.height,}) : super(key: key);
+  const LoadMoreEmpty({super.key, this.height,});
 
   final double? height;
 

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import '../../constants/constants.dart';
 import '../ui.dart';
 
-class WidgetSliverLoadMoreVertical<T> extends StatefulWidget {
-  const WidgetSliverLoadMoreVertical.build({
-    Key? key,
+class SliverLoadMoreVertical<T> extends StatefulWidget {
+  const SliverLoadMoreVertical.build({
+    super.key,
     required this.itemBuilder,
     required this.dataRequester,
     required this.initRequester,
@@ -16,7 +16,7 @@ class WidgetSliverLoadMoreVertical<T> extends StatefulWidget {
     this.loadingColorBackground,
     this.widgetError,
     this.appBar,
-  }) : super(key: key);
+  });
 
   final TextStyle? styleError;
   final ItemBuilderWrap<T> itemBuilder;
@@ -29,12 +29,12 @@ class WidgetSliverLoadMoreVertical<T> extends StatefulWidget {
   final Widget? appBar;
 
   @override
-  State createState() => WidgetSliverLoadMoreVerticalState<T>();
+  State createState() => SliverLoadMoreVerticalState<T>();
 }
 
 // ignore: always_specify_types
-class WidgetSliverLoadMoreVerticalState<T>
-    extends State<WidgetSliverLoadMoreVertical<T>> {
+class SliverLoadMoreVerticalState<T>
+    extends State<SliverLoadMoreVertical<T>> {
   bool isPerformingRequest = false;
   final ScrollController _controller = ScrollController();
 
@@ -65,7 +65,7 @@ class WidgetSliverLoadMoreVerticalState<T>
           )
         else
           SliverToBoxAdapter(
-            child: widget.widgetError ?? const WidgetEmpty(),
+            child: widget.widgetError ?? const LoadMoreEmpty(),
           )
       ];
 

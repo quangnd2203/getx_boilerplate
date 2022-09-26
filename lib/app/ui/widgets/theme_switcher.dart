@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class ThemeSwitcher extends InheritedWidget {
 
-  const ThemeSwitcher({Key? key, required this.data, required Widget child})
-      : super(child: child, key: key);
+  const ThemeSwitcher({super.key, required this.data, required super.child});
   final _ThemeSwitcherWidgetState data;
 
   static _ThemeSwitcherWidgetState of(BuildContext context) {
@@ -21,8 +20,7 @@ class ThemeSwitcher extends InheritedWidget {
 class ThemeSwitcherWidget extends StatefulWidget {
 
   const ThemeSwitcherWidget(
-      {Key? key, required this.child, required this.initialThemeData})
-      : super(key: key);
+      {super.key, required this.child, required this.initialThemeData});
   final Widget child;
   final ThemeData initialThemeData;
 

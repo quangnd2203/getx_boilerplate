@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import '../ui.dart';
 
 class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
-  BaseScreen({Key? key}) : super(key: key);
+  BaseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
         Get.delete<T>();
       },
       builder: (BaseController controller) {
-        return WidgetLoadingFullScreen(
+        return LoadingFullScreen(
           loading: controller.loading.value,
           child: builder()!,
         );
