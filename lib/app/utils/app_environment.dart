@@ -9,6 +9,8 @@ class AppEnvironment {
         return AppEndpoint.BASE_URL_DEV;
       case 'prod':
         return AppEndpoint.BASE_URL_PROD;
+      case 'staging':
+        return AppEndpoint.BASE_URL_STAGING;
       default:
         return '';
     }

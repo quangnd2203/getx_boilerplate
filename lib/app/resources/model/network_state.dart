@@ -2,7 +2,8 @@
 
 import 'dart:convert';
 import 'dart:developer';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:get/get.dart';
 import '../../constants/app_endpoint.dart';
 
 typedef NetworkStateConverter<T> = T Function(dynamic json);
@@ -10,7 +11,18 @@ typedef NetworkStateConverter<T> = T Function(dynamic json);
 class NetworkState<T> {
   NetworkState({this.message, this.data, this.status});
 
-  factory NetworkState.fromResponse(Response<dynamic> response, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
+  NetworkState.withDisconnect() {
+    message = 'system_lost_internet'.tr;
+    status = AppEndpoint.ERROR_DISCONNECT;
+    data = null;
+    errorData = null;
+  }
+
+  NetworkState.withErrorConvert() {
+    data = null;
+  }
+
+  factory NetworkState.fromResponse(dio.Response<dynamic> response, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
     try {
       final Map<String, dynamic> json = jsonDecode(jsonEncode(response.data)) as Map<String, dynamic>;
       return NetworkState<T>._fromJson(
@@ -31,9 +43,9 @@ class NetworkState<T> {
     if (value != null)
       data = value;
     else if (prefix != null) {
-      if (prefix.trim().isEmpty){
+      if (prefix.trim().isEmpty) {
         data = converter != null && json != null ? converter(json) : json as T?;
-      } else{
+      } else {
         data = converter != null && json[prefix] != null ? converter(json[prefix] as Map<String, dynamic>) : json[prefix] as T?;
       }
     } else {
@@ -43,45 +55,49 @@ class NetworkState<T> {
 
   NetworkState.fromJson(Map<String, dynamic> json) {
     message = json['message'] as String?;
-    status = json['status'] as int ?;
+    status = json['status'] as int?;
     data = json['data'] as T;
   }
 
-  NetworkState.withError(DioError error) {
-    String message;
+  NetworkState.withError(dio.DioError error) {
+    String? message;
     int? code;
-    final Response<T>? response = error.response as Response<T>?;
+    final dio.Response<dynamic>? response = error.response;
     if (response != null) {
       code = response.statusCode;
-      message = (response.data! as Map<String, dynamic>)['message'] as String;
+      message = _handleMessageByStatusCode(code, error);
     } else {
       code = AppEndpoint.ERROR_SERVER;
-      message = 'Không thể kết nối đến máy chủ!';
+      message = 'system_can_not_connect_server'.tr;
     }
     this.message = message;
     status = code;
     data = null;
+    errorData = response?.data;
   }
 
-  NetworkState.withDisconnect() {
-    message = 'Mất kết nối internet, vui lòng kiểm tra wifi/3g và thử lại!';
-    status = AppEndpoint.ERROR_DISCONNECT;
-    data = null;
-  }
+  String? _handleMessageByStatusCode(int? statusCode, dio.DioError error) {
+    switch (statusCode) {
+      case AppEndpoint.UNAUTHORIZED:
+        return null;
 
-  NetworkState.withErrorConvert() {
-    data = null;
+      case AppEndpoint.FORBIDDEN:
+        return 'no_permission';
+    }
+    return null;
   }
 
   int? status;
   String? message;
   T? data;
+  dynamic errorData;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     data['status'] = status;
     data['data'] = this.data;
+    data['errorData'] = errorData;
     return data;
   }
 

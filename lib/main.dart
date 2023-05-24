@@ -1,16 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:overlay_support/overlay_support.dart';
+import 'package:toast/toast.dart';
 
 import 'app/constants/constants.dart';
-import 'app/notification/firebase_messaging.dart';
-import 'app/notification/notification.dart';
+import 'app/resources/service/firebase_service.dart';
 import 'app/routes/app_pages.dart';
 import 'app/translations/app_translations.dart';
 import 'app/ui/ui.dart';
@@ -20,28 +16,30 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
-  await Firebase.initializeApp();
+  if (FLAVOR != 'dev') {
+    // await FirebaseService().init();
+  }
   await AppPrefs.initListener();
-  await notificationInitialed();
+  // await notificationInitialed();
   Logger().d('RUNNING IN $FLAVOR ENVIRONMENT'.toUpperCase());
-  Logger().d('FCM TOKEN: ${await FirebaseCloudMessaging.getFCMToken()}');
-  runApp(const OverlaySupport(child: RestartWidget(child: App())));
+  // Logger().d('FCM TOKEN: ${await FirebaseCloudMessaging.getFCMToken()}');
+  runApp(const RestartWidget(child: App()));
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ThemeSwitcherWidget(
-        initialThemeData: normalTheme(context), child: const MyApp());
+    ToastContext().init(context);
+    return ThemeSwitcherWidget(initialThemeData: normalTheme(context), child: const MyApp());
   }
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
-  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
+  // static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -65,22 +63,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     print('ChangeAppLifecycleState: $state');
   }
+
   @override
   Widget build(BuildContext context) {
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (OverscrollIndicatorNotification overscroll) {
-        overscroll.disallowGlow();
+        overscroll.disallowIndicator();
         return true;
       },
       child: GetMaterialApp(
-        debugShowCheckedModeBanner: FLAVOR == 'dev',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeSwitcher.of(context).themeData,
         title: APP_NAME,
         initialRoute: Routes.SPLASH,
         defaultTransition: Transition.cupertino,
         getPages: AppPages.pages,
         locale: AppLocale.ja.value,
         translationsKeys: AppTranslation.translations,
-        navigatorObservers: <NavigatorObserver>[MyApp.observer],
       ),
     );
   }

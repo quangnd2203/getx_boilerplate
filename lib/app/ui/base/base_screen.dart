@@ -1,6 +1,5 @@
 // ignore_for_file: flutter_style_todos
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import '../ui.dart';
@@ -12,10 +11,8 @@ class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
   Widget build(BuildContext context) {
     super.build(context);
     return GetX<T>(
-      dispose: (GetXState<T> state) {
-        Logger().d('DISPOSE: "$runtimeType" - "$T"');
-        Get.delete<T>();
-      },
+      dispose: dispose,
+      initState: initState,
       builder: (BaseController controller) {
         return LoadingFullScreen(
           loading: controller.loading.value,
@@ -23,6 +20,15 @@ class BaseScreen<T extends BaseController> extends GetResponsiveView<T>{
         );
       },
     );
+  }
+
+  void dispose(GetXState<T> state){
+    Logger().d('DISPOSE: "$runtimeType" - "$T"');
+    Get.delete<T>();
+  }
+
+  void initState(GetXState<T> state){
+
   }
 
   @override

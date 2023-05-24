@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../constants/app_images.dart';
 import '../../constants/app_text_styles.dart';
+import '../../constants/constants.dart';
 import '../ui.dart';
 
 class SplashScreen extends BaseScreen<SplashController> {
@@ -10,10 +12,36 @@ class SplashScreen extends BaseScreen<SplashController> {
   Widget? builder() {
     // TODO: implement builder
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Text('splash_getting'.tr, style: AppTextStyles.normalBoldBlack,),
+      body: Container(
+        width: Get.width,
+        padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32).copyWith(top: viewPaddingTop + 64),
+        child: Column(
+          children: <Widget>[
+            const Expanded(
+              flex: 2,
+              child: SizedBox(),
+            ),
+            Image.asset(
+              AppImages.png('splash_icon'),
+              fit: BoxFit.fill,
+            ),
+            const Expanded(
+              flex: 3,
+              child: SizedBox(),
+            ),
+            Text(
+              'login_copy_right'.tr,
+              style: AppTextStyles.normalRegular.copyWith(
+                fontSize: 12,
+                color: AppColors.textGrey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  @override
+  void dispose(GetXState<SplashController> state) {}
 }

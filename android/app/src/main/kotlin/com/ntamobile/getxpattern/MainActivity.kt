@@ -1,4 +1,4 @@
-package com.ntamobile.getxpattern
+package com.quangnd.getxboilerplate
 
 import io.flutter.embedding.android.FlutterActivity
 

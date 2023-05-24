@@ -1,5 +1,4 @@
 // ignore_for_file: always_specify_types, strict_raw_type
-
 import 'package:get_storage/get_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -12,7 +11,7 @@ class AppPrefs {
 
   static Future<void> initListener() async {
     await GetStorage.init('AppPref');
-    _box.listenKey('user', (user) {
+    _box.listenKey('userInfo', (user) {
       _userBehavior.add(user);
     });
   }
@@ -25,14 +24,15 @@ class AppPrefs {
 
   static String? get accessToken => _box.read('accessToken');
 
-  // static set user(Apps? _user) {
-  //   _box.write('user', _user);
+  // static set userInfo(UserResponse? user) {
+  //   _box.write('userInfo', user?.toJson());
   // }
   //
-  // static Apps? get user {
-  //   final _ = _box.read('user');
-  //   if (_ == null) return null;
-  //   return _ is Apps ? _ : Apps.fromJson(_box.read('user'));
+  // static UserResponse? get userInfo {
+  //   final _ = _box.read('userInfo');
+  //   if (_ == null)
+  //     return null;
+  //   return UserResponse.fromJson(_box.read('userInfo'));
   // }
 
   static Stream get watchUser => _userBehavior.stream;

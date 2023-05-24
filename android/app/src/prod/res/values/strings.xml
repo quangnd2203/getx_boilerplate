@@ -12,4 +12,7 @@
 
     <!--YOUR FACEBOOK CLIENT TOKEN-->
     <string name="fb_login_client_token">5b66f1da9337a6c9e041ee147d225aee</string>
+
+    <!--DEEP LINK HOST-->
+    <string name="host">watchkeyapp.page.link</string>
 </resources>

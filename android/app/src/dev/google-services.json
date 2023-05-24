@@ -1,93 +1,42 @@
 {
   "project_info": {
-    "project_number": "722408477068",
-    "project_id": "getxpattern-892e7",
-    "storage_bucket": "getxpattern-892e7.appspot.com"
+    "project_number": "677174211807",
+    "project_id": "GetXboilerplate-c8bc0",
+    "storage_bucket": "GetXboilerplate-c8bc0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:722408477068:android:e2cb766c704f6e1ab706a9",
+        "mobilesdk_app_id": "1:677174211807:android:0debb76b781e69ed2f256a",
         "android_client_info": {
-          "package_name": "com.ntamobile.getxpattern"
+          "package_name": "com.quangnd.getxboilerplate.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "722408477068-1mjk1pf3619mk5k5o6shvqfqrteakkik.apps.googleusercontent.com",
+          "client_id": "677174211807-45qi4ois1dj9sgg6l5t929qjvum139d4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ntamobile.getxpattern",
+            "package_name": "com.quangnd.getxboilerplate.dev",
             "certificate_hash": "c7c6371a0f493f9f70db9df27cea8bc90c9a599f"
           }
         },
         {
-          "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
+          "client_id": "677174211807-ui09qd26ljehsr2onkps8jnpkaiaj1jj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_1shD63wV7A1xgUeHm126StnnlxVcO-c"
+          "current_key": "AIzaSyBc5BjZ90xWzeQwQZf8WV-rOYV_zNqvAhM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
+              "client_id": "677174211807-ui09qd26ljehsr2onkps8jnpkaiaj1jj.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "722408477068-k64js2f2h643gjii0li4ub5pvj2rjag6.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ntamobile.getxpattern.dev"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:722408477068:android:9c3289263b99fee1b706a9",
-        "android_client_info": {
-          "package_name": "com.ntamobile.getxpattern.dev"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "722408477068-3qm9luale26kpekkuc8sn848agolvh2s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ntamobile.getxpattern.dev",
-            "certificate_hash": "c7c6371a0f493f9f70db9df27cea8bc90c9a599f"
-          }
-        },
-        {
-          "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC_1shD63wV7A1xgUeHm126StnnlxVcO-c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "722408477068-t815ct4t2vkngf65hqr8cvgkvt9lu036.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "722408477068-k64js2f2h643gjii0li4ub5pvj2rjag6.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.ntamobile.getxpattern.dev"
-              }
             }
           ]
         }

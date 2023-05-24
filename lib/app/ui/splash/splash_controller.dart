@@ -1,23 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../routes/app_pages.dart';
+import '../../resources/repository/auth_repository.dart';
 import '../ui.dart';
 
 class SplashController extends BaseController {
+  final AuthRepository authRepository = AuthRepository();
+  
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
-    await getConfig();
-    await getProfile();
+    // initial();
   }
 
-  Future<void> getConfig() async {}
+  // Future<void> initial() async {
+  //   await Future<dynamic>.delayed(const Duration(seconds: 1));
+  //   final NetworkState<UserResponse> networkState = await authRepository.authentication();
+  //   _saveUserInfo(user: networkState.data, token: networkState.isSuccess ? AppPrefs.accessToken : null);
+  //   if (networkState.isSuccess) {
+  //     Get.offAllNamed(Routes.DASH_BOARD);
+  //   } else {
+  //     Get.offAllNamed(Routes.LOGIN);
+  //   }
+  // }
 
-  Future<void> getProfile() async {
-    setLoading(true);
-    await Future.delayed(const Duration(seconds: 5));
-    setLoading(false);
-    Get.offAllNamed(Routes.NAVIGATION);
-  }
+  // void _saveUserInfo({UserResponse? user, String? token}) {
+  //   AppPrefs.accessToken = token;
+  //   AppPrefs.userInfo = user;
+  //   AppPrefs.userRole = user?.authority;
+  // }
 }

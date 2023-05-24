@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class FadeIndexedStack extends StatefulWidget {
 
   const FadeIndexedStack({
-    Key? key,
+    super.key,
     required this.index,
     required this.children,
     this.duration = const Duration(
       milliseconds: 800,
     ),
-  }) : super(key: key);
+  });
   final int index;
   final List<Widget> children;
   final Duration duration;
