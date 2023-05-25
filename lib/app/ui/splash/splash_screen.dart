@@ -29,13 +29,6 @@ class SplashScreen extends BaseScreen<SplashController> {
               flex: 3,
               child: SizedBox(),
             ),
-            Text(
-              'login_copy_right'.tr,
-              style: AppTextStyles.normalRegular.copyWith(
-                fontSize: 12,
-                color: AppColors.textGrey,
-              ),
-            ),
           ],
         ),
       ),
